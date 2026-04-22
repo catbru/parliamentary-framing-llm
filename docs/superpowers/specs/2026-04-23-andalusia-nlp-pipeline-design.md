@@ -43,7 +43,7 @@ Pipeline en R per extreure, estructurar i analitzar les intervencions del Parlam
 - **Autònom:** cada script és independent, s'executa per separat des de RStudio
 - **Resilient:** `file.exists()` + `tryCatch()` a tots els bucles de xarxa; si s'interromp, es reprèn on s'ha quedat
 - **Stack:** R + `rvest`, `httr2`, `jsonlite`, `stringr`, `dplyr`, `purrr`
-- **API LLM:** OpenAI (clau a `.env` com `OPENAI_API`)
+- **Stack LLM:** `ellmer` (wrapper R per a LLMs) + OpenAI (clau a `.env` com `OPENAI_API`)
 
 ## Flux de dades per script
 
@@ -74,7 +74,7 @@ Funcions compartides: `safe_get()` (httr2 + tryCatch), `polite_delay()` (Sys.sle
 ### `4_llm_framing.R` (ESBÓS)
 - Filtre regex: `(?i)catalu[ñn]a|catalanes|generalitat|independentistas`
 - Per cada intervenció filtrada: construeix prompt (system + few-shot examples del Codebook)
-- Crida API OpenAI amb `response_format = json_schema` forçant l'schema del Codebook
+- Crida LLM via `ellmer` (`chat_openai()`) amb structured output forçant l'schema del Codebook
 - Output: `{ID}_{ordre}_{nom}.json` a `02_dades_processades/llm_frames/`
 
 ### `5_analisi_i_plots.qmd` (ESBÓS)
@@ -110,6 +110,7 @@ Funcions compartides: `safe_get()` (httr2 + tryCatch), `polite_delay()` (Sys.sle
 | Decisió | Elecció | Motiu |
 |---|---|---|
 | Arquitectura | Scripts autònoms + `00_utils.R` | Resiliència, facilitat de reprendre, sense dependencies extra |
+| Crides LLM | `ellmer` | Wrapper R natiu per a LLMs, evita httr2 manual per a l'API d'OpenAI |
 | Scraping catàleg | `rvest` (R) | Stack R obligatori per CLAUDE.md |
 | Legislatures incloses | 10, 11, 12 | Les úniques amb STT disponible |
 | Delay entre peticions | 1s (configurable) | Respecte al servidor, evitar bloquejos |
