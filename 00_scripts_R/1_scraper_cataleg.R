@@ -22,7 +22,6 @@ source("00_scripts_R/00_utils.R")
 
 BASE_URL   <- "https://videoteca.parlamentodeandalucia.es"
 SEARCH_PATH <- "/search?page=%d&gbody_id=3378&legs_id=3377&search=&view_type=list"
-OUT_VIDEOS <- "01_dades_crues/cataleg/cataleg_videos.json"
 OUT_MASTER <- "01_dades_crues/cataleg/cataleg_master.json"
 DEMO_MODE  <- FALSE  # TRUE = processa només les 2 primeres pàgines
 
@@ -44,7 +43,27 @@ extract_url_id <- function(href) {
   str_match(href, "[?&]id=([A-Za-z0-9+/=_-]+)")[, 2]
 }
 
-# ── PART 1: Scraping del llistat ──────────────────────────────────────────────
+# Extreu data ISO a partir del text del div de data
+parse_fecha <- function(txt) {
+  txt_clean <- str_squish(iconv(txt, "latin1", "UTF-8", sub = ""))
+  m <- str_match(txt_clean, "(\\d{1,2}) de (\\w+) de (\\d{4})")
+  if (is.na(m[1, 1])) return(NA_character_)
+  mesos <- c("enero" = 1, "febrero" = 2, "marzo" = 3, "abril" = 4,
+             "mayo" = 5, "junio" = 6, "julio" = 7, "agosto" = 8,
+             "septiembre" = 9, "octubre" = 10, "noviembre" = 11, "diciembre" = 12)
+  mes_num <- mesos[str_to_lower(m[1, 3])]
+  if (is.na(mes_num)) return(NA_character_)
+  sprintf("%s-%02d-%02d", m[1, 4], mes_num, as.integer(m[1, 2]))
+}
+
+# Extreu el codi de legislatura del camp "Código 1:"
+parse_legislatura <- function(txt) {
+  m <- str_match(txt, "PL-(X{0,3}(?:IX|IV|V?I{0,3})) LEGISLATURA")
+  if (is.na(m[1, 1])) return(NA_character_)
+  m[1, 2]
+}
+
+# ── Scraping del llistat ──────────────────────────────────────────────────────
 
 get_page_videos <- function(page_num) {
   url  <- paste0(BASE_URL, sprintf(SEARCH_PATH, page_num))
@@ -68,6 +87,9 @@ get_page_videos <- function(page_num) {
     titol <- title_a |> html_element("span") |> html_attr("title")
     if (is.na(href) || is.na(titol)) return(NULL)
 
+    # Elimina el port :443 de l'href
+    href <- str_replace(href, ":443/", "/")
+
     url_id <- extract_url_id(href)
 
     # id_master des de la imatge del poster (element germà en el pare)
@@ -80,15 +102,19 @@ get_page_videos <- function(page_num) {
     }
 
     # Data de la sessió (text secundari)
-    data_div <- item |> html_element("div[style*='margin-top:10px']")
+    data_div  <- item |> html_element("div[style*='margin-top:10px']")
     data_text <- if (!is.null(data_div)) str_trim(html_text(data_div, trim = TRUE)) else NA_character_
 
+    fecha      <- parse_fecha(data_text)
+    legislatura <- parse_legislatura(data_text)
+
     tibble(
-      url_id    = url_id,
-      titol     = titol,
-      href      = href,
-      id_master = id_master,
-      data_text = data_text
+      url_id      = url_id,
+      titol       = titol,
+      id_master   = id_master,
+      fecha       = fecha,
+      legislatura = legislatura,
+      href        = href
     )
   })
 
@@ -118,50 +144,10 @@ scrape_full_catalog <- function(max_pages = Inf) {
 
 max_p <- if (DEMO_MODE) 2 else Inf
 
-if (!file_done(OUT_VIDEOS)) {
-  log_msg("=== PART 1: Scraping del catàleg ===")
+if (!file_done(OUT_MASTER)) {
+  log_msg("=== Scraping del catàleg complet ===")
   catalog <- scrape_full_catalog(max_pages = max_p)
   log_msg(paste("Total vídeos:", nrow(catalog)))
-  write_json(catalog, OUT_VIDEOS, auto_unbox = TRUE, pretty = TRUE)
-  log_msg(paste("Desat:", OUT_VIDEOS))
-} else {
-  log_msg(paste("Catàleg ja existeix:", OUT_VIDEOS))
-  catalog <- as_tibble(fromJSON(OUT_VIDEOS))
-}
-
-# ── PART 2: Consolidació ID_MASTER ───────────────────────────────────────────
-# En aquest script, l'id_master s'extreu directament durant el scraping.
-# Part 2 consolida i verifica (si calgués visitar pàgines individuals, ho faria aquí).
-
-if (!file_done(OUT_MASTER)) {
-  log_msg("=== PART 2: Resolució ID_MASTER ===")
-
-  # Si manquen id_master (cas excepcional), intentar via pàgina individual
-  if (!"id_master" %in% names(catalog)) catalog$id_master <- NA_integer_
-
-  missing_idx <- which(is.na(catalog$id_master))
-  if (length(missing_idx) > 0) {
-    log_msg(paste("Resolent", length(missing_idx), "id_master faltants via pàgina individual..."))
-    for (i in missing_idx) {
-      url  <- paste0(BASE_URL, "/watch?id=", catalog$url_id[i])
-      log_msg(paste("  GET", url))
-      resp <- safe_get(url)
-      if (!is.null(resp)) {
-        html_text_raw <- resp_body_string(resp)
-        # Cerca subject_id=N en el text cru de la pàgina
-        m <- str_match(html_text_raw, "subject_id[\"']?\\s*:\\s*(\\d+)")
-        if (!is.na(m[1, 1])) {
-          catalog$id_master[i] <- as.integer(m[1, 2])
-        } else {
-          log_msg(paste("    No subject_id per", catalog$url_id[i]))
-        }
-      }
-      polite_delay()
-    }
-  } else {
-    log_msg("Tots els id_master ja resolts des del llistat")
-  }
-
   n_resolts <- sum(!is.na(catalog$id_master))
   log_msg(paste("IDs resolts:", n_resolts, "/", nrow(catalog)))
   write_json(catalog, OUT_MASTER, auto_unbox = TRUE, pretty = TRUE)
