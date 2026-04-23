@@ -9,8 +9,12 @@
 #  - id_master: extret directament de la URL del poster (img[src*="/posters/"]),
 #    que conté un token base64 amb {"subject_klass":"item","subject_id":<N>}
 #    → NO cal visitar cada pàgina /watch?id=... per separat.
-#  - Paginació: /search?page=N&gbody_id=3378&legs_id=3377&search=&view_type=list
-#    (11 pàgines en total a data d'inspecció)
+#  - Paginació: /search?page=N&gbody_id=3378&legs_id=<ID>&search=&view_type=list
+#
+# legs_id descoberts inspeccionant el <select> de la pàgina de cerca:
+#   10a Legislatura → legs_id = 13
+#   11a Legislatura → legs_id = 14
+#   12a Legislatura → legs_id = 3377
 #
 library(rvest)
 library(httr2)
@@ -20,10 +24,13 @@ library(dplyr)
 
 source("00_scripts_R/00_utils.R")
 
-BASE_URL   <- "https://videoteca.parlamentodeandalucia.es"
-SEARCH_PATH <- "/search?page=%d&gbody_id=3378&legs_id=3377&search=&view_type=list"
-OUT_MASTER <- "01_dades_crues/cataleg/cataleg_master.json"
-DEMO_MODE  <- FALSE  # TRUE = processa només les 2 primeres pàgines
+BASE_URL    <- "https://videoteca.parlamentodeandalucia.es"
+SEARCH_PATH <- "/search?page=%d&gbody_id=3378&legs_id=%d&search=&view_type=list"
+OUT_MASTER  <- "01_dades_crues/cataleg/cataleg_master.json"
+DEMO_MODE   <- FALSE  # TRUE = processa només les 2 primeres pàgines
+
+# Mapa de legs_id → número de legislatura en àrabs
+LEGS_MAP <- c("13" = "10", "14" = "11", "3377" = "12")
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -56,18 +63,21 @@ parse_fecha <- function(txt) {
   sprintf("%s-%02d-%02d", m[1, 4], mes_num, as.integer(m[1, 2]))
 }
 
-# Extreu el codi de legislatura del camp "Código 1:"
+# Extreu el codi de legislatura del camp "Código 1:" i retorna número aràbic
+ROMAN_TO_ARABIC <- c("X" = "10", "XI" = "11", "XII" = "12")
+
 parse_legislatura <- function(txt) {
   m <- str_match(txt, "PL-(X{0,3}(?:IX|IV|V?I{0,3})) LEGISLATURA")
   if (is.na(m[1, 1])) return(NA_character_)
-  m[1, 2]
+  roman <- m[1, 2]
+  ROMAN_TO_ARABIC[roman] %||% roman
 }
 
 # ── Scraping del llistat ──────────────────────────────────────────────────────
 
-get_page_videos <- function(page_num) {
-  url  <- paste0(BASE_URL, sprintf(SEARCH_PATH, page_num))
-  log_msg(paste("Scraping pàgina", page_num))
+get_page_videos <- function(page_num, legs_id = 3377) {
+  url  <- paste0(BASE_URL, sprintf(SEARCH_PATH, page_num, legs_id))
+  log_msg(paste("Scraping pàgina", page_num, "legs_id", legs_id))
   resp <- safe_get(url)
   if (is.null(resp)) return(NULL)
 
@@ -122,11 +132,11 @@ get_page_videos <- function(page_num) {
     filter(!is.na(url_id), nchar(url_id) > 5, !is.na(titol), nchar(titol) > 2)
 }
 
-scrape_full_catalog <- function(max_pages = Inf) {
+scrape_full_catalog <- function(legs_id = 3377, max_pages = Inf) {
   all_videos <- list()
   page <- 1
   repeat {
-    videos <- get_page_videos(page)
+    videos <- get_page_videos(page, legs_id = legs_id)
     if (is.null(videos) || nrow(videos) == 0) {
       log_msg(paste("Pàgina", page, "buida — fi de paginació"))
       break
@@ -145,9 +155,21 @@ scrape_full_catalog <- function(max_pages = Inf) {
 max_p <- if (DEMO_MODE) 2 else Inf
 
 if (!file_done(OUT_MASTER)) {
-  log_msg("=== Scraping del catàleg complet ===")
-  catalog <- scrape_full_catalog(max_pages = max_p)
-  log_msg(paste("Total vídeos:", nrow(catalog)))
+  log_msg("=== Scraping del catàleg complet (legislatures 10, 11, 12) ===")
+
+  # Itera per cada legislatura i combina resultats
+  all_legs <- lapply(names(LEGS_MAP), function(lid) {
+    leg_num <- LEGS_MAP[lid]
+    log_msg(paste("--- Legislatura", leg_num, "(legs_id =", lid, ") ---"))
+    df <- scrape_full_catalog(legs_id = as.integer(lid), max_pages = max_p)
+    log_msg(paste("  Legislatura", leg_num, "→", nrow(df), "sessions"))
+    df
+  })
+
+  catalog <- bind_rows(all_legs) |>
+    distinct(url_id, .keep_all = TRUE)
+
+  log_msg(paste("Total sessions (deduplicat):", nrow(catalog)))
   n_resolts <- sum(!is.na(catalog$id_master))
   log_msg(paste("IDs resolts:", n_resolts, "/", nrow(catalog)))
   write_json(catalog, OUT_MASTER, auto_unbox = TRUE, pretty = TRUE)

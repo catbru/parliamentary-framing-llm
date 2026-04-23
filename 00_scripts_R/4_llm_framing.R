@@ -15,6 +15,7 @@ readRenviron(".env")  # carrega OPENAI_API i LLM_MODEL
 
 STT_DIR  <- "01_dades_crues/intervencions_stt"
 OUT_DIR  <- "02_dades_processades/llm_frames"
+dir.create(OUT_DIR, showWarnings = FALSE, recursive = TRUE)
 MODEL    <- Sys.getenv("LLM_MODEL", unset = "gpt-4o-mini")
 API_KEY  <- Sys.getenv("OPENAI_API")
 

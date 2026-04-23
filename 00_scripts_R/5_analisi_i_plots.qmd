@@ -56,12 +56,12 @@ diputats <- fromJSON("01_dades_crues/diputats/diputats.json")         |> as_tibb
 ## 3. Variable de control: Estatus del Partit (Govern/Oposició)
 
 ```{r gov-status}
-# PSOE governa legislatures X-XI | PP governa legislatura XII
+# PSOE governa legislatures 10-11 | PP governa legislatura 12
 # TODO: Un cop el join de legislatura estigui fet:
 # frames_df <- frames_df |>
 #   mutate(
-#     estatus_psoe = if_else(legislatura %in% c("X", "XI"), "Govern", "Oposició"),
-#     estatus_pp   = if_else(legislatura == "XII", "Govern", "Oposició")
+#     estatus_psoe = if_else(legislatura %in% c("10", "11"), "Govern", "Oposició"),
+#     estatus_pp   = if_else(legislatura == "12", "Govern", "Oposició")
 #   )
 ```
 
