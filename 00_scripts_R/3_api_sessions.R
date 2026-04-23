@@ -83,8 +83,8 @@ nom_fitxer_safe <- function(nom) {
     iconv(from = "UTF-8", to = "ASCII//TRANSLIT") |>
     str_replace_all("[^a-z0-9]", "_") |>
     str_replace_all("_+", "_") |>
-    str_trim("both") |>
-    str_sub(1, 40)
+    str_sub(1, 40) |>
+    str_replace_all("_+$", "")
 }
 
 fetch_stt <- function(id_master) {
@@ -162,6 +162,7 @@ for (id in master$id_master) {
 log_msg("=== PART 2: STT ===")
 for (id in master$id_master) {
   fetch_stt(id)
+  polite_delay()
 }
 
 log_msg("=== FI: 3_api_sessions.R ===")
