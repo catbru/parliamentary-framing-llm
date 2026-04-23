@@ -213,6 +213,21 @@ if (!file_done(OUT_FILE)) {
     }
   }
 
+  # Netejar strings no-parlamentaris de grup_parlamentari
+  # Els grups parlamentaris vàlids sempre comencen amb "G.P. "
+  # Altres strings (staff, no adscrits, etc.) es marcen com NA
+  all_deputies <- all_deputies |>
+    mutate(
+      grup_parlamentari = if_else(
+        !is.na(grup_parlamentari) & !str_starts(grup_parlamentari, "G\\.P\\."),
+        NA_character_,
+        grup_parlamentari
+      )
+    ) |>
+    mutate(
+      partit = sapply(grup_parlamentari, grup_a_partit)
+    )
+
   # Escriure output
   dir.create(dirname(OUT_FILE), showWarnings = FALSE, recursive = TRUE)
   write_json(all_deputies, OUT_FILE, auto_unbox = TRUE, pretty = TRUE)
