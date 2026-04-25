@@ -1,0 +1,579 @@
+---
+title: "Anàlisi de Framing: Catalunya al Parlament d'Andalusia"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    self-contained: true
+    theme: cosmo
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r setup}
+#| include: false
+knitr::opts_knit$set(root.dir = normalizePath(".."))
+
+library(tidyverse)
+library(lubridate)
+library(scales)
+library(knitr)
+library(kableExtra)
+library(patchwork)
+
+IN_CSV       <- "02_dades_processades/dataset_consolidat/corpus_intervencions.csv"
+PROGRESS_CSV <- "02_dades_processades/llm_frames/llm_progress.csv"
+
+REGEX_CATALUNYA_EXT <- "(?i)(catalu[ñn]a|catalan(es|as|án)?|independentis(mo|tas?)|separatis(mo|tas?)|golpistas?)"
+
+COL_SENTIMENT <- c(
+  "Hostil_Negatiu"        = "#E63946",
+  "Neutral_Institucional" = "#adb5bd",
+  "Empàtic_Positiu"       = "#2a9d8f"
+)
+COL_FRAME <- c(
+  "Constitutional_Threat"   = "#9b2335",
+  "Electoral_Weaponization" = "#6a0572",
+  "Grievance_Economics"     = "#F18F01",
+  "Positive_Reference"      = "#2a9d8f",
+  "Other"                   = "#ced4da"
+)
+FRAME_LVLS <- c("Constitutional_Threat","Electoral_Weaponization",
+                "Grievance_Economics","Positive_Reference","Other")
+
+theme_set(
+  theme_minimal(base_size = 12) +
+    theme(plot.title    = element_text(face = "bold", size = 13),
+          plot.subtitle = element_text(color = "grey40", size = 10),
+          legend.position = "bottom")
+)
+```
+
+```{r load-data}
+#| include: false
+corpus <- read.csv(IN_CSV, stringsAsFactors = FALSE) |>
+  mutate(
+    fecha              = as.Date(fecha),
+    data_mes           = as.Date(data_mes),
+    mencio_cat_ext     = as.logical(mencio_cat_ext),
+    mencio_catalunya   = as.logical(mencio_catalunya),
+    orador_identificat = as.logical(orador_identificat),
+    data_trim          = floor_date(fecha, "quarter")
+  )
+
+if (file.exists(PROGRESS_CSV)) {
+  progress <- read.csv(PROGRESS_CSV, stringsAsFactors = FALSE) |>
+    mutate(id_master         = suppressWarnings(as.integer(id_master)),
+           intervencio_ordre = suppressWarnings(as.integer(intervencio_ordre))) |>
+    filter(!is.na(id_master), !is.na(intervencio_ordre)) |>
+    select(-any_of(c("row_key", "llm_ts")))
+  corpus <- corpus |>
+    left_join(progress, by = c("id_master", "intervencio_ordre"))
+} else {
+  corpus <- corpus |>
+    mutate(llm_sentiment_cat = NA_character_, llm_primary_frame = NA_character_,
+           llm_confidence = NA_real_,         llm_reasoning     = NA_character_)
+}
+
+corpus_cat <- corpus |> filter(mencio_cat_ext)
+corpus_llm <- corpus |> filter(!is.na(llm_sentiment_cat))
+n_pendent  <- sum(corpus$mencio_cat_ext & is.na(corpus$llm_sentiment_cat), na.rm = TRUE)
+```
+
+## Sobre les dades
+
+Aquest informe analitza les mencions a Catalunya en les intervencions plenàries del
+Parlament d'Andalusia (legislatures X, XI i XII) a partir de dues capes de processament:
+
+1. **Detecció per regex** (`4_analisi_descriptiu.qmd`) — identifica totes les
+   intervencions que contenen el patró `REGEX_CATALUNYA_EXT` (topònim, gentilici,
+   independentisme, separatisme, *golpistas*).
+2. **Classificació LLM** (`5_llm_framing.R`) — per a cada intervenció detectada,
+   un model OpenAI aplica el codebook de *framing* estructurat i retorna
+   `sentiment_cat` i `primary_frame` en JSON Schema garantit.
+
+```{r tbl-estat}
+#| tbl-cap: "Estat del corpus en el moment de renderitzar"
+#| echo: false
+tibble(
+  Indicador = c(
+    "Intervencions totals al corpus",
+    "Intervencions amb menció a Catalunya (regex ampliat)",
+    "  — classificades pel LLM",
+    "  — pendents de classificació"
+  ),
+  Valor = c(
+    formatC(nrow(corpus),     format="fg", big.mark="."),
+    formatC(nrow(corpus_cat), format="fg", big.mark="."),
+    formatC(nrow(corpus_llm), format="fg", big.mark="."),
+    formatC(n_pendent,        format="fg", big.mark=".")
+  )
+) |>
+  kable(align=c("l","r")) |>
+  kable_styling(bootstrap_options=c("striped","hover"),
+                full_width=FALSE, position="left")
+```
+
+> Les seccions d'anàlisi LLM s'actualitzen automàticament en re-renderitzar,
+> a mesura que `5_llm_framing.R` classifica noves intervencions.
+
+---
+
+## Part 1: Visió general de les mencions
+
+### Estadístiques globals
+
+```{r tbl-global}
+#| tbl-cap: "Resum de mencions a Catalunya"
+tibble(
+  Indicador = c(
+    "Sessions amb almenys una menció",
+    "Intervencions amb menció (% sobre total)",
+    "Total de coincidències regex",
+    "Oradors únics que mencionen Catalunya",
+    "Partits representats"
+  ),
+  Valor = c(
+    as.character(n_distinct(corpus_cat$id_master)),
+    paste0(formatC(nrow(corpus_cat), format="fg", big.mark="."),
+           "  (", round(100*nrow(corpus_cat)/nrow(corpus), 1), "%)"),
+    formatC(sum(corpus$n_mencions_cat_ext, na.rm=TRUE), format="fg", big.mark="."),
+    as.character(n_distinct(corpus_cat$orador)),
+    as.character(n_distinct(corpus_cat$partit[!is.na(corpus_cat$partit)]))
+  )
+) |>
+  kable(align=c("l","r")) |>
+  kable_styling(bootstrap_options=c("striped","hover"),
+                full_width=FALSE, position="left")
+```
+
+### Evolució temporal
+
+```{r fig-temp}
+#| fig-cap: "Mencions a Catalunya: absoluts i proporció mensual"
+#| fig-height: 4
+cat_mes <- corpus |>
+  filter(!is.na(data_mes)) |>
+  group_by(data_mes) |>
+  summarise(n_total=n(), n_cat=sum(mencio_cat_ext, na.rm=TRUE),
+            pct=100*n_cat/n_total, .groups="drop")
+
+p1 <- ggplot(cat_mes, aes(data_mes, n_cat)) +
+  geom_col(fill="#E63946", alpha=0.8) +
+  scale_x_date(date_breaks="6 months", date_labels="%b\n%Y") +
+  labs(title="Mencions mensuals (absolut)", x=NULL, y="N intervencions")
+
+p2 <- ggplot(cat_mes, aes(data_mes, pct)) +
+  geom_line(color="#457B9D", linewidth=0.9) +
+  geom_smooth(method="loess", se=TRUE, color="#E63946",
+              fill="#E63946", alpha=0.15, linewidth=0.6) +
+  scale_x_date(date_breaks="6 months", date_labels="%b\n%Y") +
+  scale_y_continuous(labels=label_percent(scale=1), limits=c(0,NA)) +
+  labs(subtitle="Proporció sobre el total d'intervencions del mes", x=NULL, y="%")
+
+p1 / p2
+```
+
+### Per partit al llarg del temps
+
+```{r fig-temp-partit}
+#| fig-cap: "% d'intervencions amb menció a Catalunya per trimestre i partit"
+#| fig-height: 5
+corpus |>
+  filter(!is.na(partit), !is.na(data_trim)) |>
+  group_by(data_trim, partit) |>
+  summarise(n_tot=n(), n_cat=sum(mencio_cat_ext, na.rm=TRUE),
+            pct=100*n_cat/n_tot, .groups="drop") |>
+  filter(n_tot >= 5) |>
+  ggplot(aes(data_trim, pct, color=partit)) +
+  geom_line(linewidth=0.75, alpha=0.85) +
+  geom_point(size=1.8, alpha=0.8) +
+  scale_x_date(date_breaks="1 year", date_labels="%Y") +
+  scale_y_continuous(labels=label_percent(scale=1), limits=c(0,NA)) +
+  labs(title="% d'intervencions amb menció a Catalunya, per trimestre i partit",
+       subtitle="Períodes amb menys de 5 intervencions exclosos",
+       x=NULL, y="% intervencions", color="Partit") +
+  theme(legend.position="right")
+```
+
+### Proporció per partit
+
+```{r fig-pct-partit}
+#| fig-cap: "% d'intervencions amb menció a Catalunya per partit"
+#| fig-height: 4
+corpus |>
+  filter(!is.na(partit)) |>
+  group_by(partit) |>
+  summarise(pct=100*mean(mencio_cat_ext, na.rm=TRUE), n=n(), .groups="drop") |>
+  mutate(partit=fct_reorder(partit, pct), label=paste0(round(pct,1),"%")) |>
+  ggplot(aes(pct, partit)) +
+  geom_col(aes(fill=pct), alpha=0.85, show.legend=FALSE) +
+  geom_text(aes(label=label), hjust=-0.1, size=3.5) +
+  scale_fill_gradient(low="#AED9E0", high="#E63946") +
+  scale_x_continuous(labels=label_percent(scale=1),
+                     expand=expansion(mult=c(0,0.12))) +
+  labs(title="% d'intervencions que mencionen Catalunya, per partit",
+       x="% intervencions amb menció", y=NULL)
+```
+
+---
+
+## Part 2: Codebook de framing
+
+El codebook segueix la metodologia de **Halterman & Keith (2024)** per a classificació
+de *frames* discursius amb LLM. Cada intervenció classificada rep dues etiquetes:
+
+### Dimensió 1 — Sentiment (`sentiment_cat`)
+
+| Etiqueta | Definició | Indicadors típics |
+|----------|-----------|-------------------|
+| **Hostil_Negatiu** | Llenguatge pejoratiu, agressiu o d'alarma | *golpistas, chantaje, ruptura, privilegios* |
+| **Neutral_Institucional** | Fets objectius, dades o procediments sense càrrega valorativa | *según los datos, el acuerdo prevé* |
+| **Empàtic_Positiu** | Solidaritat, Catalunya com a exemple, crida al diàleg | *ejemplo a seguir, colaboración, entendimiento* |
+
+### Dimensió 2 — Marc discursiu (`primary_frame`)
+
+| Etiqueta | Definició | Regla d'exclusió |
+|----------|-----------|-----------------|
+| **Grievance_Economics** | Andalusia infrafinançada per concessions a Catalunya | Exclou si no hi ha comparació directa amb Andalusia |
+| **Constitutional_Threat** | Catalunya com amenaça a la unitat d'Espanya o l'Estat de Dret | Exclou si la crítica és exclusivament econòmica |
+| **Electoral_Weaponization** | Pactes amb partits catalans per atacar un rival polític nacional | Ha d'incloure atac explícit a un partit estatal |
+| **Positive_Reference** | Catalunya com a model de bona pràctica o referent d'èxit | Exclou mencions positives purament electoralistes |
+| **Other** | Mencions que no encaixen en cap marc anterior | — |
+
+---
+
+## Part 3: Sentiment
+
+### Global per partit
+
+```{r tbl-sent-partit}
+#| tbl-cap: "Distribució de sentiment per partit (N absoluts i % sobre classificades)"
+corpus_llm |>
+  filter(!is.na(partit)) |>
+  group_by(Partit=partit) |>
+  summarise(
+    N          = n(),
+    Hostil     = sum(llm_sentiment_cat=="Hostil_Negatiu"),
+    Neutral    = sum(llm_sentiment_cat=="Neutral_Institucional"),
+    Empàtic    = sum(llm_sentiment_cat=="Empàtic_Positiu"),
+    `% Hostil` = round(100*Hostil/N, 1),
+    `% Neutral`= round(100*Neutral/N, 1),
+    `% Empàtic`= round(100*Empàtic/N, 1),
+    .groups="drop"
+  ) |>
+  arrange(desc(`% Hostil`)) |>
+  kable(align=c("l",rep("r",7))) |>
+  kable_styling(bootstrap_options=c("striped","hover"),
+                full_width=FALSE, position="left")
+```
+
+```{r fig-sent-global}
+#| fig-cap: "Distribució de sentiment per partit (% sobre intervencions classificades)"
+#| fig-height: 4
+corpus_llm |>
+  filter(!is.na(partit)) |>
+  count(partit, llm_sentiment_cat) |>
+  group_by(partit) |>
+  mutate(pct=100*n/sum(n)) |>
+  ungroup() |>
+  mutate(
+    partit = fct_reorder(
+      partit,
+      ifelse(llm_sentiment_cat=="Hostil_Negatiu", pct, 0),
+      .fun=sum, .na_rm=TRUE
+    ),
+    llm_sentiment_cat = factor(llm_sentiment_cat,
+      levels=c("Hostil_Negatiu","Neutral_Institucional","Empàtic_Positiu"))
+  ) |>
+  ggplot(aes(pct, partit, fill=llm_sentiment_cat)) +
+  geom_col(position="stack", alpha=0.9) +
+  geom_text(aes(label=if_else(pct>6, paste0(round(pct),"%"), "")),
+            position=position_stack(vjust=0.5), size=3, color="white", fontface="bold") +
+  scale_fill_manual(values=COL_SENTIMENT, name="Sentiment") +
+  scale_x_continuous(labels=label_percent(scale=1),
+                     expand=expansion(mult=c(0,0.02))) +
+  labs(title="Sentiment cap a Catalunya per partit",
+       x="% d'intervencions classificades", y=NULL)
+```
+
+### Evolució temporal del sentiment per partit
+
+```{r fig-sent-temps}
+#| fig-cap: "Evolució del sentiment per trimestre i partit"
+#| fig-height: 6
+corpus_llm |>
+  filter(!is.na(partit), !is.na(data_trim)) |>
+  group_by(data_trim, partit) |>
+  summarise(
+    n_tot    = n(),
+    pct_host = 100*mean(llm_sentiment_cat=="Hostil_Negatiu"),
+    pct_emp  = 100*mean(llm_sentiment_cat=="Empàtic_Positiu"),
+    .groups  = "drop"
+  ) |>
+  filter(n_tot >= 3) |>
+  pivot_longer(c(pct_host, pct_emp), names_to="sentiment", values_to="pct") |>
+  mutate(sentiment = recode(sentiment,
+    pct_host="Hostil_Negatiu", pct_emp="Empàtic_Positiu")) |>
+  ggplot(aes(data_trim, pct, color=sentiment,
+             group=interaction(partit, sentiment))) +
+  geom_line(linewidth=0.7, alpha=0.85) +
+  geom_point(size=1.5, alpha=0.8) +
+  facet_wrap(~partit, ncol=2) +
+  scale_color_manual(
+    values=COL_SENTIMENT[c("Hostil_Negatiu","Empàtic_Positiu")],
+    name="Sentiment") +
+  scale_x_date(date_breaks="2 years", date_labels="%Y") +
+  scale_y_continuous(labels=label_percent(scale=1), limits=c(0,NA)) +
+  labs(title="Evolució del sentiment per trimestre i partit",
+       subtitle="% Hostil i % Empàtic sobre intervencions classificades (mín. 3/trim.)",
+       x=NULL, y="% intervencions")
+```
+
+---
+
+## Part 4: Marc discursiu
+
+### Global per partit
+
+```{r tbl-frame-partit}
+#| tbl-cap: "Distribució de frames per partit (% sobre intervencions classificades)"
+corpus_llm |>
+  filter(!is.na(partit)) |>
+  count(Partit=partit, frame=llm_primary_frame) |>
+  group_by(Partit) |>
+  mutate(pct=round(100*n/sum(n),1), N=sum(n)) |>
+  ungroup() |>
+  pivot_wider(id_cols=c(Partit,N), names_from=frame,
+              values_from=pct, values_fill=0) |>
+  select(Partit, N, any_of(FRAME_LVLS)) |>
+  arrange(desc(
+    rowSums(across(any_of(c("Constitutional_Threat","Electoral_Weaponization")),
+                   \(x) replace_na(x, 0)))
+  )) |>
+  kable(align=c("l","r",rep("r",5))) |>
+  kable_styling(bootstrap_options=c("striped","hover"),
+                full_width=FALSE, position="left")
+```
+
+```{r fig-frame-global}
+#| fig-cap: "Distribució de frames per partit (% sobre intervencions classificades)"
+#| fig-height: 4
+corpus_llm |>
+  filter(!is.na(partit)) |>
+  count(partit, llm_primary_frame) |>
+  group_by(partit) |>
+  mutate(pct=100*n/sum(n)) |>
+  ungroup() |>
+  mutate(
+    partit = fct_reorder(
+      partit,
+      ifelse(llm_primary_frame %in%
+               c("Constitutional_Threat","Electoral_Weaponization"), pct, 0),
+      .fun=sum, .na_rm=TRUE
+    ),
+    llm_primary_frame = factor(llm_primary_frame, levels=rev(FRAME_LVLS))
+  ) |>
+  ggplot(aes(pct, partit, fill=llm_primary_frame)) +
+  geom_col(position="stack", alpha=0.9) +
+  geom_text(aes(label=if_else(pct>6, paste0(round(pct),"%"), "")),
+            position=position_stack(vjust=0.5), size=2.8, color="white", fontface="bold") +
+  scale_fill_manual(values=COL_FRAME, name="Frame") +
+  scale_x_continuous(labels=label_percent(scale=1),
+                     expand=expansion(mult=c(0,0.02))) +
+  labs(title="Marc discursiu per partit",
+       x="% d'intervencions classificades", y=NULL)
+```
+
+### Evolució temporal dels frames per partit
+
+```{r fig-frame-temps}
+#| fig-cap: "Evolució dels frames principals per trimestre i partit"
+#| fig-height: 6
+frames_princ <- c("Constitutional_Threat","Electoral_Weaponization","Grievance_Economics")
+
+corpus_llm |>
+  filter(!is.na(partit), !is.na(data_trim),
+         llm_primary_frame %in% frames_princ) |>
+  count(data_trim, partit, llm_primary_frame) |>
+  group_by(data_trim, partit) |>
+  mutate(n_tot=sum(n), pct=100*n/n_tot) |>
+  ungroup() |>
+  filter(n_tot >= 3) |>
+  mutate(llm_primary_frame=factor(llm_primary_frame, levels=frames_princ)) |>
+  ggplot(aes(data_trim, pct, color=llm_primary_frame)) +
+  geom_line(linewidth=0.7, alpha=0.85) +
+  geom_point(size=1.5, alpha=0.8) +
+  facet_wrap(~partit, ncol=2) +
+  scale_color_manual(values=COL_FRAME[frames_princ], name="Frame") +
+  scale_x_date(date_breaks="2 years", date_labels="%Y") +
+  scale_y_continuous(labels=label_percent(scale=1), limits=c(0,NA)) +
+  labs(title="Evolució dels frames principals per trimestre i partit",
+       subtitle="% sobre classificades en el trimestre (mín. 3)",
+       x=NULL, y="% intervencions")
+```
+
+---
+
+## Part 5: Sentiment × Frame combinats
+
+```{r fig-heatmap-combo}
+#| fig-cap: "Combinació sentiment × frame — % per fila (sobre el total de cada sentiment)"
+#| fig-height: 3.5
+corpus_llm |>
+  count(llm_sentiment_cat, llm_primary_frame) |>
+  group_by(llm_sentiment_cat) |>
+  mutate(pct=100*n/sum(n)) |>
+  ungroup() |>
+  mutate(
+    llm_sentiment_cat = factor(llm_sentiment_cat,
+      levels=c("Hostil_Negatiu","Neutral_Institucional","Empàtic_Positiu")),
+    llm_primary_frame = factor(llm_primary_frame, levels=FRAME_LVLS)
+  ) |>
+  ggplot(aes(llm_primary_frame, llm_sentiment_cat, fill=pct)) +
+  geom_tile(color="white", linewidth=0.8) +
+  geom_text(aes(label=paste0(round(pct,1),"%")), size=3.5) +
+  scale_fill_gradient(low="white", high="#E63946", name="%") +
+  scale_x_discrete(labels=\(x) str_replace_all(x,"_","\n")) +
+  labs(title="Distribució de frames dins de cada sentiment",
+       x="Marc discursiu", y="Sentiment") +
+  theme(legend.position="right", axis.text.x=element_text(size=8))
+```
+
+```{r fig-combo-partit}
+#| fig-cap: "Sentiment × Frame per partit (N absoluts)"
+#| fig-height: 5
+corpus_llm |>
+  filter(!is.na(partit)) |>
+  count(partit, llm_sentiment_cat, llm_primary_frame) |>
+  mutate(
+    llm_sentiment_cat = factor(llm_sentiment_cat,
+      levels=c("Hostil_Negatiu","Neutral_Institucional","Empàtic_Positiu")),
+    llm_primary_frame = factor(llm_primary_frame, levels=FRAME_LVLS)
+  ) |>
+  ggplot(aes(llm_primary_frame, n, fill=llm_sentiment_cat)) +
+  geom_col(position="stack", alpha=0.9) +
+  facet_wrap(~partit, ncol=2, scales="free_y") +
+  scale_fill_manual(values=COL_SENTIMENT, name="Sentiment") +
+  scale_x_discrete(labels=\(x) str_wrap(str_replace_all(x,"_"," "), 11)) +
+  labs(title="Combinació sentiment × frame per partit (N absoluts)",
+       x=NULL, y="N intervencions") +
+  theme(axis.text.x=element_text(size=7))
+```
+
+---
+
+## Part 6: Top diputats per mencions classificades
+
+```{r tbl-top-diputats}
+#| tbl-cap: "Top 20 oradors per intervencions classificades amb menció a Catalunya"
+corpus_llm |>
+  filter(!is.na(partit)) |>
+  group_by(Orador=orador, Partit=partit) |>
+  summarise(
+    N                    = n(),
+    `% Hostil`           = round(100*mean(llm_sentiment_cat=="Hostil_Negatiu"), 1),
+    `Frame més freqüent` = names(sort(table(llm_primary_frame), decreasing=TRUE))[1],
+    `Conf. mitjana`      = round(mean(llm_confidence, na.rm=TRUE), 2),
+    .groups = "drop"
+  ) |>
+  slice_max(N, n=20) |>
+  kable(align=c("l","l","r","r","l","r")) |>
+  kable_styling(bootstrap_options=c("striped","hover"),
+                full_width=FALSE, position="left")
+```
+
+---
+
+## Part 7: Mostres qualitatives per partit
+
+Per a cada partit, es mostren fins a 3 exemples aleatoris que cobreixen **frames
+i sentiments** el més diversos possible, per il·lustrar la varietat discursiva
+dins de cada grup parlamentari.
+
+```{r mostres}
+#| results: asis
+#| echo: false
+
+extract_snippet <- function(text, pattern=REGEX_CATALUNYA_EXT, n_words=60L) {
+  words   <- str_split(text, "\\s+")[[1]]
+  n       <- length(words)
+  match_i <- which(str_detect(words, pattern))
+  if (length(match_i) == 0L) return(paste(words[seq_len(min(n,120))], collapse=" "))
+  idx     <- match_i[1L]
+  start_w <- max(1L, idx - n_words)
+  end_w   <- min(n,  idx + n_words)
+  ctx     <- words[start_w:end_w]
+  rel     <- idx - start_w + 1L
+  ctx[rel] <- paste0(
+    '<mark style="background:#ffe066;padding:0 2px;border-radius:2px;font-weight:bold">',
+    ctx[rel], "</mark>")
+  prefix <- if (start_w > 1L) "<em>[…]</em> " else ""
+  suffix <- if (end_w < n)    " <em>[…]</em>" else ""
+  paste0(prefix, paste(ctx, collapse=" "), suffix)
+}
+
+partits_ok <- corpus_llm |>
+  filter(!is.na(partit)) |>
+  count(partit) |>
+  filter(n >= 3) |>
+  pull(partit) |>
+  sort()
+
+set.seed(42)
+for (p in partits_ok) {
+  sub <- corpus_llm |>
+    filter(partit == p, !is.na(llm_primary_frame), !is.na(llm_sentiment_cat))
+
+  # Maximitza diversitat: tria fins a 3 files cobrint combinacions sentiment×frame úniques
+  sub_ranked <- sub |>
+    mutate(combo = paste(llm_sentiment_cat, llm_primary_frame, sep=" | ")) |>
+    group_by(combo) |>
+    slice_sample(n=1) |>
+    ungroup() |>
+    slice_sample(n=min(3L, n_distinct(sub$llm_primary_frame, sub$llm_sentiment_cat)))
+
+  cat(sprintf('\n### %s\n\n', htmltools::htmlEscape(p)))
+
+  for (i in seq_len(nrow(sub_ranked))) {
+    r <- sub_ranked[i, ]
+    snippet  <- extract_snippet(r$text)
+    sent_col <- switch(r$llm_sentiment_cat,
+      Hostil_Negatiu        = "#E63946",
+      Neutral_Institucional = "#6c757d",
+      Empàtic_Positiu       = "#2a9d8f",
+      "#6c757d")
+    link <- if (!is.na(r$url_interv))
+      sprintf(' <a href="%s" target="_blank" style="text-decoration:none" title="Obrir vídeo">&#9654;</a>',
+              r$url_interv)
+    else ""
+
+    cat('<div style="border:1px solid #ddd;border-radius:6px;padding:14px 18px;margin-bottom:14px;background:#fafafa">\n')
+    cat(sprintf(
+      '<p style="margin:0 0 5px 0;font-size:.9em"><strong>%s</strong> &nbsp;·&nbsp; %s%s</p>\n',
+      htmltools::htmlEscape(r$orador),
+      format(as.Date(r$fecha), "%d/%m/%Y"),
+      link
+    ))
+    cat(sprintf(
+      '<p style="margin:0 0 8px 0;font-size:.78em;color:#666"><em>%s &nbsp;·&nbsp; Leg. %s</em></p>\n',
+      htmltools::htmlEscape(r$titol_sessio), r$legislatura
+    ))
+    cat(sprintf(
+      '<p style="margin:0 0 8px 0"><span style="background:%s;color:white;padding:2px 7px;border-radius:3px;font-size:.78em;font-weight:bold">%s</span> &nbsp;<span style="background:#e9ecef;color:#333;padding:2px 7px;border-radius:3px;font-size:.78em">%s</span> &nbsp;<span style="color:#999;font-size:.78em">conf. %.2f</span></p>\n',
+      sent_col, r$llm_sentiment_cat, r$llm_primary_frame, r$llm_confidence
+    ))
+    if (!is.na(r$llm_reasoning) && nchar(trimws(r$llm_reasoning)) > 0)
+      cat(sprintf(
+        '<p style="margin:0 0 8px 0;font-size:.82em;color:#555;font-style:italic">%s</p>\n',
+        htmltools::htmlEscape(trimws(r$llm_reasoning))
+      ))
+    cat(sprintf('<p style="margin:0;line-height:1.6;font-size:.9em">%s</p>\n', snippet))
+    cat('</div>\n\n')
+  }
+}
+```

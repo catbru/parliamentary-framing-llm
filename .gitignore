@@ -1,0 +1,11 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.vscode/
+.playwright-mcp/
+.env
+*.log
+andalusia-mostra.Rproj
+01_dades_crues/
+02_dades_processades/

@@ -1,0 +1,713 @@
+---
+title: "Anàlisi Descriptiu: Intervencions del Parlament d'Andalusia"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    self-contained: true
+    theme: cosmo
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r setup}
+#| include: false
+knitr::opts_knit$set(root.dir = normalizePath(".."))
+
+library(tidyverse)
+library(jsonlite)
+library(lubridate)
+library(scales)
+library(knitr)
+library(kableExtra)
+library(patchwork)
+
+REGEX_CATALUNYA     <- "(?i)catalu[ñn]a"
+REGEX_CATALUNYA_EXT <- "(?i)(catalu[ñn]a|catalan(es|as|án)?|independentis(mo|tas?)|separatis(mo|tas?)|golpistas?)"
+OUT_CSV  <- "02_dades_processades/dataset_consolidat/corpus_intervencions.csv"
+STT_DIR  <- "01_dades_crues/intervencions_stt"
+CAT_FILE <- "01_dades_crues/cataleg/cataleg_master.json"
+DIP_FILE <- "01_dades_crues/diputats/diputats.json"
+
+dir.create(dirname(OUT_CSV), showWarnings = FALSE, recursive = TRUE)
+
+`%||%` <- function(a, b) if (!is.null(a) && length(a) > 0 && !anyNA(a)) a else b
+
+theme_set(
+  theme_minimal(base_size = 12) +
+    theme(plot.title    = element_text(face = "bold", size = 13),
+          plot.subtitle = element_text(color = "grey40", size = 10),
+          legend.position = "bottom")
+)
+```
+
+```{r helpers}
+#| include: false
+nom_norm <- function(nom) {
+  nom |>
+    str_to_lower() |>
+    iconv(to = "ASCII//TRANSLIT") |>
+    str_replace_all("[^a-z]", " ") |>
+    str_squish() |>
+    str_split(" ") |>
+    sapply(function(x) paste(sort(x[nchar(x) > 1]), collapse = "_"))
+}
+
+parse_stt_file <- function(filepath) {
+  tryCatch({
+    fname <- basename(filepath)
+    m <- str_match(fname, "^(\\d+)_(\\d{3})_(.+)\\.json$")
+    if (is.na(m[1, 1])) return(NULL)
+
+    id_master <- as.integer(m[1, 2])
+    ordre     <- as.integer(m[1, 3])
+
+    data <- fromJSON(filepath, simplifyVector = FALSE)
+    secs <- data$data$record$timeline$sections
+
+    collect_leaves <- function(sections) {
+      result <- list()
+      for (s in sections) {
+        has_sub <- !is.null(s$sections) && length(s$sections) > 0
+        if (has_sub) {
+          result <- c(result, collect_leaves(s$sections))
+        } else {
+          nom <- s$name %||% ""
+          if (!str_starts(nom, "\\[") && nchar(nom) > 0) {
+            stt <- s$stt %||% list()
+            if (length(stt) > 0) {
+              words <- sapply(stt, function(x) x$text %||% "")
+              words_adj <- ifelse(
+                str_ends(words, "\\.") & words != "...",
+                paste0(words, " "), words
+              )
+              text   <- trimws(paste(words_adj, collapse = " "))
+              n_real <- sum(trimws(words) != "..." & nchar(trimws(words)) > 0)
+              result <- c(result, list(list(
+                nom        = nom,
+                start      = as.numeric(s$start %||% NA_real_),
+                text       = text,
+                n_paraules = n_real,
+                n_stt      = length(stt)
+              )))
+            }
+          }
+        }
+      }
+      result
+    }
+
+    leaves <- collect_leaves(secs)
+    if (length(leaves) == 0) return(NULL)
+
+    idx  <- which.max(sapply(leaves, `[[`, "n_paraules"))
+    prim <- leaves[[idx]]
+
+    tibble(
+      id_master         = id_master,
+      intervencio_ordre = ordre,
+      orador            = prim$nom,
+      iv_start_s        = prim$start,
+      text              = prim$text,
+      n_paraules        = prim$n_paraules,
+      n_segments_stt    = prim$n_stt
+    )
+  }, error = function(e) NULL)
+}
+```
+
+```{r gobierno-junta}
+#| include: false
+gobierno_junta <- tribble(
+  ~nom,                                      ~rol,                                                        ~partit,
+  "Fernández-Pacheco Monterreal, Ramón",     "Consejero de Cultura y Patrimonio Histórico",               "PP",
+  "España Reina, Carolina",                  "Consejera de Hacienda y Financiación Europea",              "PP",
+  "Díaz Jiménez, Rocío",                     "Consejera de Fomento y Articulación Territorial",           "PP",
+  "Blanco Eguren, Rocío",                    "Consejera de Empleo, Empresa y Trabajo Autónomo",           "PP",
+  "Bernal Bergua, Arturo",                   "Consejero de Turismo, Cultura y Deporte",                   "PP",
+  "Gómez Villamandos, José Carlos",          "Consejero de Universidad, Investigación e Innovación",      "PP",
+  "Nieto Ballesteros, José Antonio",         "Consejero de Justicia, Administración Local y Función Pública", "PP",
+  "Paradela Gutiérrez, Jorge",               "Consejero de Sostenibilidad, Medio Ambiente y Economía Azul","PP",
+  "Hernández Soto, Rocío",                   "Consejera de Salud y Familias (XI leg.)",                   "PP",
+  "Crespo Díaz, María Carmen",               "Consejera de Agricultura, Pesca y Desarrollo Rural (XI leg.)","PP"
+) |>
+  mutate(nom_norm = nom_norm(nom))
+```
+
+```{r build-corpus}
+#| include: false
+if (file.exists(OUT_CSV) && file.size(OUT_CSV) > 100) {
+  corpus <- read.csv(OUT_CSV, stringsAsFactors = FALSE) |>
+    mutate(
+      fecha              = as.Date(fecha),
+      data_mes           = as.Date(data_mes),
+      mencio_catalunya   = as.logical(mencio_catalunya),
+      mencio_cat_ext     = as.logical(mencio_cat_ext),
+      orador_identificat = as.logical(orador_identificat)
+    )
+} else {
+  cataleg <- as_tibble(fromJSON(CAT_FILE)) |>
+    filter(!is.na(id_master)) |>
+    mutate(fecha = as.Date(fecha)) |>
+    select(id_master, titol_sessio = titol, fecha, legislatura, href)
+
+  diputats <- as_tibble(fromJSON(DIP_FILE)) |>
+    filter(!is.na(nom)) |>
+    mutate(nom_norm = nom_norm(nom)) |>
+    distinct(nom_norm, legislatura, .keep_all = TRUE) |>
+    select(nom_norm, legislatura, grup_parlamentari, partit)
+
+  stt_files <- list.files(STT_DIR, pattern = "\\.json$", full.names = TRUE)
+  n_cores   <- max(1L, parallel::detectCores() - 1L)
+  corpus_raw <- bind_rows(
+    parallel::mclapply(stt_files, parse_stt_file, mc.cores = n_cores)
+  )
+
+  corpus <- corpus_raw |>
+    left_join(cataleg, by = "id_master") |>
+    mutate(
+      any       = year(fecha),
+      mes       = month(fecha),
+      trimestre = quarter(fecha),
+      data_mes  = floor_date(fecha, "month"),
+      url_interv = if_else(
+        !is.na(href),
+        paste0(href, if_else(!is.na(iv_start_s),
+                             paste0("&start=", floor(iv_start_s)), "")),
+        NA_character_
+      )
+    ) |>
+    mutate(orador_norm = nom_norm(orador)) |>
+    left_join(diputats, by = c("orador_norm" = "nom_norm", "legislatura")) |>
+    left_join(
+      gobierno_junta |> select(nom_norm, rol_govern = rol, partit_govern = partit),
+      by = c("orador_norm" = "nom_norm")
+    ) |>
+    mutate(
+      grup_parlamentari = coalesce(grup_parlamentari,
+                                   if_else(!is.na(rol_govern),
+                                           paste0("Govern Junta (", partit_govern, ")"),
+                                           NA_character_)),
+      partit            = coalesce(partit, partit_govern)
+    ) |>
+    select(-rol_govern, -partit_govern) |>
+    mutate(
+      mencio_catalunya   = str_detect(text, REGEX_CATALUNYA),
+      n_mencions_cat     = str_count(text, REGEX_CATALUNYA),
+      mencio_cat_ext     = str_detect(text, REGEX_CATALUNYA_EXT),
+      n_mencions_cat_ext = str_count(text, REGEX_CATALUNYA_EXT),
+      n_caracters        = nchar(text),
+      orador_identificat = !is.na(partit)
+    ) |>
+    select(
+      id_master, intervencio_ordre,
+      titol_sessio, fecha, any, mes, trimestre, data_mes, legislatura,
+      orador, orador_norm, orador_identificat,
+      grup_parlamentari, partit,
+      text, n_caracters, n_paraules, n_segments_stt,
+      mencio_catalunya, n_mencions_cat,
+      mencio_cat_ext, n_mencions_cat_ext,
+      url_interv
+    ) |>
+    arrange(fecha, id_master, intervencio_ordre)
+
+  write.csv(corpus, OUT_CSV, row.names = FALSE, fileEncoding = "UTF-8")
+}
+```
+
+## Sobre les dades
+
+Les dades d'aquest informe provenen de la [Videoteca del Parlament d'Andalusia](https://videoteca.parlamentodeandalucia.es) i han estat recollides i processades per una cadena de quatre scripts:
+
+- **`1_scraper_cataleg.R`** — Raspa el catàleg de sessions plenàries de les legislatures X, XI i XII. Per a cada sessió, visita la pàgina `/watch` corresponent i n'extreu l'identificador intern (`id_master`) del bloc JSPLAYLIST, l'única font fiable per a aquest valor.
+- **`2_cataleg_diputats.R`** — Construeix el cens de diputats i diputades per a cada legislatura, incloent-hi nom, grup parlamentari i partit.
+- **`3_api_sessions.R`** — Descarrega l'esquelet de cada sessió (ordre del dia i oradors) i les transcripcions automàtiques (STT) intervenció per intervenció, a través de l'API interna de la Videoteca.
+- **`4_analisi_descriptiu.qmd`** (aquest fitxer) — Fusiona totes les fonts en un CSV unificat (`corpus_intervencions.csv`), una fila per intervenció, amb metadades de sessió, identificació de l'orador i variables derivades per a l'anàlisi de la presència de Catalunya.
+
+---
+
+## Part 2: Visió general del corpus
+
+### Estadístiques globals
+
+```{r tbl-stats-generals}
+#| tbl-cap: "Estadístiques generals del corpus"
+
+tibble(
+  Indicador = c(
+    "Legislatures", "Sessions (plens)",
+    "Intervencions totals", "Intervencions amb text (≥1 paraula)",
+    "Total de paraules", "Mitjana paraules / intervenció",
+    "Mediana paraules / intervenció",
+    "Oradors únics", "Oradors identificats (diputats + govern)"
+  ),
+  Valor = c(
+    n_distinct(corpus$legislatura),
+    n_distinct(corpus$id_master),
+    nrow(corpus),
+    sum(corpus$n_paraules > 0),
+    sum(corpus$n_paraules),
+    round(mean(corpus$n_paraules[corpus$n_paraules > 0])),
+    median(corpus$n_paraules[corpus$n_paraules > 0]),
+    n_distinct(corpus$orador),
+    n_distinct(corpus$orador[corpus$orador_identificat])
+  )
+) |>
+  mutate(Valor = formatC(Valor, format = "fg", big.mark = ".")) |>
+  kable(align = c("l", "r")) |>
+  kable_styling(bootstrap_options = c("striped", "hover"),
+                full_width = FALSE, position = "left")
+```
+
+```{r tbl-stats-per-sessio}
+#| tbl-cap: "Intervencions per sessió: resum"
+
+corpus |>
+  group_by(id_master, titol_sessio, fecha) |>
+  summarise(n_interv = n(), n_paraules = sum(n_paraules), .groups = "drop") |>
+  summarise(
+    `Sessions`         = n(),
+    `Mínim interv.`    = min(n_interv),
+    `Mediana interv.`  = median(n_interv),
+    `Màxim interv.`    = max(n_interv),
+    `Mínim paraules`   = min(n_paraules),
+    `Mediana paraules` = median(n_paraules),
+    `Màxim paraules`   = max(n_paraules)
+  ) |>
+  pivot_longer(everything(), names_to = "Indicador", values_to = "Valor") |>
+  mutate(Valor = formatC(Valor, format = "fg", big.mark = ".")) |>
+  kable(align = c("l", "r")) |>
+  kable_styling(bootstrap_options = c("striped", "hover"),
+                full_width = FALSE, position = "left")
+```
+
+### Distribució temporal
+
+```{r fig-activitat-temporal}
+#| fig-cap: "Activitat parlamentària per mes"
+#| fig-height: 5
+
+mensual <- corpus |>
+  group_by(data_mes) |>
+  summarise(
+    n_sessions = n_distinct(id_master),
+    n_interv   = n(),
+    n_paraules = sum(n_paraules),
+    .groups    = "drop"
+  )
+
+p_sessions <- ggplot(mensual, aes(x = data_mes, y = n_sessions)) +
+  geom_col(fill = "#2E86AB", alpha = 0.85) +
+  scale_x_date(date_breaks = "6 months", date_labels = "%b\n%Y") +
+  scale_y_continuous(breaks = scales::breaks_pretty()) +
+  labs(title = "Sessions per mes", x = NULL, y = "N sessions")
+
+p_interv <- ggplot(mensual, aes(x = data_mes, y = n_interv)) +
+  geom_col(fill = "#A23B72", alpha = 0.85) +
+  scale_x_date(date_breaks = "6 months", date_labels = "%b\n%Y") +
+  scale_y_continuous(labels = label_comma()) +
+  labs(title = "Intervencions per mes", x = NULL, y = "N intervencions")
+
+p_paraules <- ggplot(mensual, aes(x = data_mes, y = n_paraules)) +
+  geom_col(fill = "#F18F01", alpha = 0.85) +
+  scale_x_date(date_breaks = "6 months", date_labels = "%b\n%Y") +
+  scale_y_continuous(labels = label_comma()) +
+  labs(title = "Paraules per mes", x = NULL, y = "N paraules")
+
+p_sessions / p_interv / p_paraules
+```
+
+### Distribució de la longitud de les intervencions
+
+```{r fig-dist-longitud}
+#| fig-cap: "Distribució de la longitud de les intervencions (escala log₁₀)"
+#| fig-height: 4
+
+corpus |>
+  filter(n_paraules > 0) |>
+  ggplot(aes(x = n_paraules)) +
+  geom_histogram(bins = 60, fill = "#457B9D", color = "white", linewidth = 0.2,
+                 alpha = 0.85) +
+  geom_vline(
+    xintercept = median(corpus$n_paraules[corpus$n_paraules > 0]),
+    color = "#E63946", linetype = "dashed", linewidth = 0.8
+  ) +
+  annotate("text",
+    x = median(corpus$n_paraules[corpus$n_paraules > 0]) * 1.4,
+    y = Inf, vjust = 1.5, size = 3.2, color = "#E63946",
+    label = paste0("mediana = ",
+                   formatC(median(corpus$n_paraules[corpus$n_paraules > 0]),
+                           format = "fg", big.mark = "."))
+  ) +
+  scale_x_log10(labels = label_comma(), breaks = c(1, 10, 100, 500, 2000, 10000)) +
+  scale_y_continuous(labels = label_comma()) +
+  labs(title = "Longitud de les intervencions",
+       subtitle = "Paraules reals (exclosos marcadors '...')",
+       x = "Paraules (escala log₁₀)", y = "N intervencions")
+```
+
+### Oradors més actius
+
+```{r fig-top-diputats-interv}
+#| fig-cap: "Top 25 oradors per nombre d'intervencions"
+#| fig-height: 7
+
+corpus |>
+  filter(orador_identificat) |>
+  count(orador, partit, sort = TRUE) |>
+  slice_head(n = 25) |>
+  mutate(orador = str_trunc(orador, 38) |> fct_reorder(n)) |>
+  ggplot(aes(x = n, y = orador, fill = partit)) +
+  geom_col(alpha = 0.85) +
+  geom_text(aes(label = label_comma()(n)), hjust = -0.1, size = 3) +
+  scale_x_continuous(labels = label_comma(),
+                     expand = expansion(mult = c(0, 0.15))) +
+  labs(title = "Oradors amb més intervencions (tots els plens)",
+       x = "Nombre d'intervencions", y = NULL, fill = "Partit") +
+  theme(legend.position = "right")
+```
+
+```{r fig-top-diputats-paraules}
+#| fig-cap: "Top 25 oradors per total de paraules"
+#| fig-height: 7
+
+corpus |>
+  filter(orador_identificat) |>
+  group_by(orador, partit) |>
+  summarise(n_paraules = sum(n_paraules), .groups = "drop") |>
+  slice_max(n_paraules, n = 25) |>
+  mutate(orador = str_trunc(orador, 38) |> fct_reorder(n_paraules)) |>
+  ggplot(aes(x = n_paraules, y = orador, fill = partit)) +
+  geom_col(alpha = 0.85) +
+  geom_text(aes(label = label_comma()(n_paraules)), hjust = -0.1, size = 3) +
+  scale_x_continuous(labels = label_comma(),
+                     expand = expansion(mult = c(0, 0.15))) +
+  labs(title = "Oradors que han parlat més paraules (tots els plens)",
+       x = "Total de paraules", y = NULL, fill = "Partit") +
+  theme(legend.position = "right")
+```
+
+### Repartiment per partit
+
+```{r fig-per-partit}
+#| fig-cap: "Intervencions i paraules per partit polític"
+#| fig-height: 4
+
+per_partit <- corpus |>
+  filter(!is.na(partit)) |>
+  group_by(partit) |>
+  summarise(n_interv = n(), n_paraules = sum(n_paraules), .groups = "drop")
+
+p_pi <- per_partit |>
+  mutate(partit = fct_reorder(partit, n_interv)) |>
+  ggplot(aes(x = n_interv, y = partit)) +
+  geom_col(fill = "#2E86AB", alpha = 0.85) +
+  geom_text(aes(label = label_comma()(n_interv)), hjust = -0.1, size = 3.2) +
+  scale_x_continuous(labels = label_comma(),
+                     expand = expansion(mult = c(0, 0.15))) +
+  labs(title = "Intervencions per partit", x = NULL, y = NULL)
+
+p_pp <- per_partit |>
+  mutate(partit = fct_reorder(partit, n_paraules)) |>
+  ggplot(aes(x = n_paraules, y = partit)) +
+  geom_col(fill = "#A23B72", alpha = 0.85) +
+  geom_text(aes(label = label_comma()(n_paraules)), hjust = -0.1, size = 3.2) +
+  scale_x_continuous(labels = label_comma(),
+                     expand = expansion(mult = c(0, 0.15))) +
+  labs(title = "Paraules per partit", x = NULL, y = NULL)
+
+p_pi | p_pp
+```
+
+---
+
+## Part 3: Presència de Catalunya
+
+Definim com a **«menció a Catalunya»** qualsevol intervenció que contingui almenys una ocurrència del patró regex ampliat:
+
+```
+(?i)(catalu[ñn]a | catalan(es|as|án)? | independentis(mo|tas?) | separatis(mo|tas?) | golpistas?)
+```
+
+Això captura les formes següents:
+
+| Grup | Termes inclosos |
+|------|-----------------|
+| Topònim | *Cataluña*, *Cataluna* |
+| Gentilici | *catalán*, *catalana*, *catalanes*, *catalanas*, *catalan* |
+| Independentisme | *independentismo*, *independentista*, *independentistas* |
+| Separatisme | *separatismo*, *separatista*, *separatistas* |
+| Legitimitat | *golpista*, *golpistas* |
+
+El corpus conté a més la columna `mencio_catalunya` basada en el regex restringit (`catalu[ñn]a` únicament), que permet comparar fins a quin punt les mencions directes al topònim i les mencions al debat independentista coincideixen o divergeixen.
+
+```{r def-cat-corpus}
+corpus_cat <- corpus |> filter(mencio_cat_ext)
+```
+
+### Estadístiques generals
+
+```{r tbl-cat-global}
+#| tbl-cap: "Presència de Catalunya al corpus (regex ampliat)"
+
+tibble(
+  Indicador = c(
+    "Intervencions amb menció (regex ampliat)",
+    "  — d'aquestes, amb topònim Cataluña",
+    "% sobre el total d'intervencions",
+    "Total de coincidències regex",
+    "Oradors únics que mencionen Catalunya",
+    "Partits que mencionen Catalunya",
+    "Sessions amb almenys una menció"
+  ),
+  Valor = c(
+    formatC(nrow(corpus_cat), format = "fg", big.mark = "."),
+    formatC(sum(corpus$mencio_catalunya), format = "fg", big.mark = "."),
+    paste0(round(100 * nrow(corpus_cat) / nrow(corpus), 2), "%"),
+    formatC(sum(corpus$n_mencions_cat_ext), format = "fg", big.mark = "."),
+    as.character(n_distinct(corpus_cat$orador)),
+    as.character(n_distinct(corpus_cat$partit[!is.na(corpus_cat$partit)])),
+    as.character(n_distinct(corpus_cat$id_master))
+  )
+) |>
+  kable(align = c("l", "r")) |>
+  kable_styling(bootstrap_options = c("striped", "hover"),
+                full_width = FALSE, position = "left")
+```
+
+### Per partit
+
+```{r tbl-cat-per-partit}
+#| tbl-cap: "Mencions a Catalunya per partit polític (regex ampliat)"
+
+corpus |>
+  filter(!is.na(partit)) |>
+  group_by(Partit = partit) |>
+  summarise(
+    `Intervencions totals` = n(),
+    `Amb Catalunya`        = sum(mencio_cat_ext, na.rm = TRUE),
+    `% amb Catalunya`      = round(100 * mean(mencio_cat_ext, na.rm = TRUE), 1),
+    `Total mencions`       = sum(n_mencions_cat_ext, na.rm = TRUE),
+    `Mencions / interv.`   = round(sum(n_mencions_cat_ext) / n(), 2),
+    .groups = "drop"
+  ) |>
+  arrange(desc(`Amb Catalunya`)) |>
+  kable(align = c("l", rep("r", 5))) |>
+  kable_styling(bootstrap_options = c("striped", "hover"),
+                full_width = FALSE, position = "left")
+```
+
+### Evolució temporal
+
+```{r fig-cat-temporal}
+#| fig-cap: "Mencions a Catalunya al llarg del temps"
+#| fig-height: 5
+
+cat_mes <- corpus |>
+  filter(!is.na(data_mes)) |>
+  group_by(data_mes) |>
+  summarise(
+    n_total = n(),
+    n_cat   = sum(mencio_cat_ext, na.rm = TRUE),
+    pct_cat = 100 * n_cat / n_total,
+    .groups = "drop"
+  )
+
+p_abs <- ggplot(cat_mes, aes(x = data_mes, y = n_cat)) +
+  geom_col(fill = "#E63946", alpha = 0.85) +
+  scale_x_date(date_breaks = "6 months", date_labels = "%b\n%Y") +
+  scale_y_continuous(labels = label_comma()) +
+  labs(title = "Intervencions amb menció a Catalunya",
+       subtitle = "Nombre absolut per mes",
+       x = NULL, y = "N intervencions")
+
+p_pct <- ggplot(cat_mes, aes(x = data_mes, y = pct_cat)) +
+  geom_line(color = "#457B9D", linewidth = 0.9) +
+  geom_point(color = "#457B9D", size = 1.8, alpha = 0.8) +
+  geom_smooth(method = "loess", se = TRUE, color = "#E63946",
+              fill = "#E63946", alpha = 0.15, linewidth = 0.7) +
+  scale_x_date(date_breaks = "6 months", date_labels = "%b\n%Y") +
+  scale_y_continuous(labels = label_percent(scale = 1), limits = c(0, NA)) +
+  labs(subtitle = "Proporció sobre el total d'intervencions del mes",
+       x = NULL, y = "% intervencions")
+
+p_abs / p_pct
+```
+
+### Per partit al llarg del temps
+
+```{r fig-cat-partit-temps}
+#| fig-cap: "% d'intervencions amb menció a Catalunya per trimestre i partit"
+#| fig-height: 5
+
+corpus |>
+  filter(!is.na(partit), !is.na(fecha)) |>
+  mutate(data_trim = floor_date(fecha, "quarter")) |>
+  group_by(data_trim, partit) |>
+  summarise(
+    n_total = n(),
+    n_cat   = sum(mencio_cat_ext, na.rm = TRUE),
+    pct_cat = 100 * n_cat / n_total,
+    .groups = "drop"
+  ) |>
+  filter(n_total >= 5) |>
+  ggplot(aes(x = data_trim, y = pct_cat, color = partit)) +
+  geom_line(linewidth = 0.75, alpha = 0.85) +
+  geom_point(size = 1.8, alpha = 0.8) +
+  scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
+  scale_y_continuous(labels = label_percent(scale = 1), limits = c(0, NA)) +
+  labs(title = "% d'intervencions que mencionen Catalunya, per trimestre i partit",
+       subtitle = "Periodes amb menys de 5 intervencions exclosos",
+       x = NULL, y = "% intervencions", color = "Partit") +
+  theme(legend.position = "right")
+```
+
+### Top diputats per mencions a Catalunya
+
+```{r tbl-top-cat-diputats}
+#| tbl-cap: "Top 20 oradors per mencions a Catalunya (regex ampliat)"
+
+corpus |>
+  filter(orador_identificat) |>
+  group_by(Orador = orador, Partit = partit) |>
+  summarise(
+    `Interv. totals`    = n(),
+    `Interv. Catalunya` = sum(mencio_cat_ext, na.rm = TRUE),
+    `% Catalunya`       = round(100 * mean(mencio_cat_ext, na.rm = TRUE), 1),
+    `Total mencions`    = sum(n_mencions_cat_ext, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  filter(`Interv. Catalunya` > 0) |>
+  slice_max(`Total mencions`, n = 20) |>
+  kable(align = c("l", "l", rep("r", 4))) |>
+  kable_styling(bootstrap_options = c("striped", "hover"),
+                full_width = FALSE, position = "left")
+```
+
+### Proporció per partit
+
+```{r fig-cat-pct-partit}
+#| fig-cap: "Proporció d'intervencions amb menció a Catalunya per partit"
+#| fig-height: 4
+
+corpus |>
+  filter(!is.na(partit)) |>
+  group_by(partit) |>
+  summarise(
+    pct_cat  = 100 * mean(mencio_cat_ext, na.rm = TRUE),
+    n_interv = n(),
+    .groups  = "drop"
+  ) |>
+  mutate(
+    partit = fct_reorder(partit, pct_cat),
+    label  = paste0(round(pct_cat, 1), "%")
+  ) |>
+  ggplot(aes(x = pct_cat, y = partit)) +
+  geom_col(aes(fill = pct_cat), alpha = 0.85, show.legend = FALSE) +
+  geom_text(aes(label = label), hjust = -0.15, size = 3.5) +
+  scale_fill_gradient(low = "#AED9E0", high = "#E63946") +
+  scale_x_continuous(labels = label_percent(scale = 1),
+                     expand = expansion(mult = c(0, 0.12))) +
+  labs(title = "% d'intervencions que mencionen Catalunya, per partit",
+       subtitle = "Sobre el total d'intervencions de cada partit",
+       x = "% intervencions amb menció", y = NULL)
+```
+
+### Mostra de context: ±200 paraules al voltant de la menció
+
+```{r cat-context}
+#| results: asis
+#| echo: false
+
+extract_context_window <- function(text, pattern = REGEX_CATALUNYA_EXT, n_words = 200L) {
+  words   <- str_split(text, "\\s+")[[1]]
+  n       <- length(words)
+  match_i <- which(str_detect(words, pattern))
+  if (length(match_i) == 0L) return(NA_character_)
+
+  idx     <- match_i[1L]
+  start_w <- max(1L, idx - n_words)
+  end_w   <- min(n, idx + n_words)
+
+  ctx <- words[start_w:end_w]
+  rel <- idx - start_w + 1L
+  ctx[rel] <- paste0('<mark style="background:#ffe066;padding:0 2px;border-radius:2px;font-weight:bold">',
+                     ctx[rel], "</mark>")
+
+  prefix <- if (start_w > 1L) "<em>[…]</em> " else ""
+  suffix <- if (end_w < n)    " <em>[…]</em>" else ""
+  paste0(prefix, paste(ctx, collapse = " "), suffix)
+}
+
+set.seed(42)
+mostres <- corpus_cat |>
+  filter(n_paraules > 50, !is.na(orador)) |>
+  slice_sample(n = 12) |>
+  rowwise() |>
+  mutate(context = extract_context_window(text)) |>
+  ungroup()
+
+for (i in seq_len(nrow(mostres))) {
+  r    <- mostres[i, ]
+  link <- if (!is.na(r$url_interv))
+    sprintf(' <a href="%s" target="_blank" title="Obrir vídeo" style="text-decoration:none">&#9654;</a>',
+            r$url_interv)
+  else ""
+  cat('<div style="border:1px solid #ddd;border-radius:6px;padding:14px 18px;margin-bottom:18px;background:#fafafa">\n')
+  cat(sprintf(
+    '<p style="margin:0 0 6px 0;font-size:.9em;color:#555"><strong>%s</strong> &nbsp;·&nbsp; %s &nbsp;·&nbsp; <span style="color:#888">%s menció/ons</span>%s</p>\n',
+    htmltools::htmlEscape(r$orador),
+    format(as.Date(r$fecha), "%d/%m/%Y"),
+    r$n_mencions_cat_ext,
+    link
+  ))
+  cat(sprintf(
+    '<p style="margin:0 0 4px 0;font-size:.8em;color:#777"><em>%s &nbsp;·&nbsp; Leg. %s &nbsp;·&nbsp; %s</em></p>\n',
+    htmltools::htmlEscape(r$titol_sessio),
+    r$legislatura,
+    htmltools::htmlEscape(coalesce(r$partit, "–"))
+  ))
+  cat(sprintf('<p style="margin:10px 0 0 0;line-height:1.6;font-size:.95em">%s</p>\n', r$context))
+  cat('</div>\n\n')
+}
+```
+
+---
+
+## Apèndix A: Membres del Govern de la Junta identificats
+
+```{r tbl-govern}
+#| tbl-cap: "Membres del Govern de la Junta de Andalusia identificats al corpus (llista aproximada)"
+
+gobierno_junta |>
+  left_join(
+    corpus |>
+      filter(orador_identificat) |>
+      count(nom_norm = orador_norm, name = "N intervencions"),
+    by = "nom_norm"
+  ) |>
+  mutate(`N intervencions` = replace_na(`N intervencions`, 0L)) |>
+  select(Nom = nom, Rol = rol, Partit = partit, `N intervencions`) |>
+  arrange(desc(`N intervencions`)) |>
+  kable(align = c("l", "l", "l", "r")) |>
+  kable_styling(bootstrap_options = c("striped", "hover"),
+                full_width = FALSE, position = "left")
+```
+
+## Apèndix B: Oradors no identificats
+
+```{r tbl-no-identificats}
+#| tbl-cap: "Oradors amb més intervencions sense identificar"
+
+corpus |>
+  filter(!orador_identificat, n_paraules > 0) |>
+  count(orador, sort = TRUE) |>
+  slice_head(n = 15) |>
+  rename(Orador = orador, `N intervencions` = n) |>
+  kable() |>
+  kable_styling(bootstrap_options = "striped", full_width = FALSE, position = "left")
+```

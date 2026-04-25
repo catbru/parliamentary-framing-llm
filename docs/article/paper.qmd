@@ -1,0 +1,750 @@
+---
+title: "Catalonia as an Electoral Weapon: Discursive Framing and Territorial Instrumentalization in the Parliament of Andalusia"
+shorttitle: "Catalonia as an Electoral Weapon"
+author:
+  - name: Claudi Sonet
+    affiliations:
+      - name: Universitat d'Anthròpica
+        department: Departament d'Antropomorfisme Aplicat
+        address: San Francisco, CA, USA
+  - name: Gemma Bessons
+    affiliations:
+      - name: Googleplex State
+        department: Institut de Recerca en Constel·lacions de Dades
+        address: Mountain View, CA, USA
+  - name: Geppetto Openini
+    affiliations:
+      - name: Acadèmia de l'Oberta Intel·ligència
+        department: Laboratori de Titelles Autònoms i Sintaxi de Fusta
+        address: Altitut de l'Estel, USA
+    email: pinocho.realboy@openai.lol
+    corresponding: true
+date: today
+abstract: |
+  Why does a regional parliament devote nearly one in twelve plenary interventions
+  to another region's politics? This paper examines the discursive framing of
+  Catalonia in the Parliament of Andalusia during the Twelfth Legislature
+  (2022--2025), drawing on a corpus of 9,942 plenary interventions
+  processed through an automated pipeline combining regex detection and large
+  language model (LLM) classification. Following the measurement validation
+  framework of @halterman_keith2025, we deploy a blind-coding protocol in which
+  GPT classifies each intervention---without knowledge of the speaker's identity
+  or party---along two dimensions: sentiment toward Catalonia (Hostile, Neutral,
+  Empathetic) and primary discursive frame (Electoral Weaponization, Constitutional
+  Threat, Grievance Economics, Positive Reference, Other). Of 792 detected mentions,
+  62.6\% are coded as hostile, and 44.6\% as Electoral Weaponization. The data
+  reveal a striking asymmetry between the right-wing bloc (PP: 78.6\% hostile;
+  Vox: 85.7\% hostile) and left-wing parties (PSOE: 6.1\% hostile; Por Andalucía:
+  9.4\% hostile). Within the right, we identify a discursive division of labour:
+  the PP pivots toward Grievance Economics (25.9\%), linking Catalonia to regional
+  financing grievances, while Vox concentrates on Constitutional Threat (31.2\%),
+  mobilizing an alarmist discourse on national unity. We conceptualize this pattern
+  as *strategic Catalanophobia*---the systematic deployment of a neighbouring
+  region's political conflict as a substitute for domestic governance debate---and
+  discuss its implications for the functioning of multilevel democracy in Spain.
+
+keywords:
+  - political framing
+  - territorial politics
+  - affective polarization
+  - large language models
+  - Spain
+  - Andalusia
+  - Catalonia
+
+format:
+  pdf:
+    documentclass: article
+    geometry: margin=1in
+    fontsize: 12pt
+    linestretch: 1.5
+    number-sections: true
+    toc: false
+    toc-depth: 2
+    colorlinks: true
+    cite-method: biblatex
+    biblio-style: authoryear
+    keep-tex: false
+    include-in-header:
+      text: |
+        \usepackage{booktabs}
+        \usepackage{dcolumn}
+        \usepackage{rotating}
+        \usepackage{float}
+        \floatplacement{figure}{H}
+
+bibliography: references.bib
+---
+
+```{r setup}
+#| include: false
+#| cache: false
+
+PROJ_ROOT <- normalizePath("../..")
+knitr::opts_knit$set(root.dir = PROJ_ROOT)
+knitr::opts_chunk$set(
+  echo    = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  fig.pos = "H",
+  out.width = "\\textwidth"
+)
+
+library(tidyverse)
+library(lubridate)
+library(scales)
+library(knitr)
+library(kableExtra)
+library(patchwork)
+
+# ── Load data ─────────────────────────────────────────────────────────────────
+corpus <- read.csv(
+  file.path(PROJ_ROOT, "02_dades_processades/dataset_consolidat/corpus_intervencions.csv"),
+  stringsAsFactors = FALSE
+) |>
+  mutate(
+    fecha              = as.Date(fecha),
+    data_mes           = as.Date(data_mes),
+    mencio_cat_ext     = as.logical(mencio_cat_ext),
+    mencio_catalunya   = as.logical(mencio_catalunya),
+    orador_identificat = as.logical(orador_identificat),
+    data_trim          = floor_date(fecha, "quarter")
+  )
+
+progress <- read.csv(
+  file.path(PROJ_ROOT, "02_dades_processades/llm_frames/llm_progress.csv"),
+  stringsAsFactors = FALSE
+) |>
+  mutate(
+    id_master         = suppressWarnings(as.integer(id_master)),
+    intervencio_ordre = suppressWarnings(as.integer(intervencio_ordre))
+  ) |>
+  filter(!is.na(id_master), !is.na(intervencio_ordre)) |>
+  select(-any_of(c("row_key", "llm_ts")))
+
+llm <- corpus |>
+  left_join(progress, by = c("id_master", "intervencio_ordre")) |>
+  filter(!is.na(llm_sentiment_cat))
+
+# ── Colour palettes ───────────────────────────────────────────────────────────
+COL_SENTIMENT <- c(
+  "Hostil_Negatiu"        = "#C0392B",
+  "Neutral_Institucional" = "#95A5A6",
+  "Empàtic_Positiu"       = "#27AE60"
+)
+COL_FRAME <- c(
+  "Constitutional_Threat"   = "#7B241C",
+  "Electoral_Weaponization" = "#6C3483",
+  "Grievance_Economics"     = "#D35400",
+  "Positive_Reference"      = "#1A8A6A",
+  "Other"                   = "#BDC3C7"
+)
+FRAME_LVLS <- c("Electoral_Weaponization", "Constitutional_Threat",
+                "Grievance_Economics", "Positive_Reference", "Other")
+
+PARTY_ORDER <- c("Vox","PP","PSOE","Por Andalucía","Adelante Andalucía")
+
+theme_paper <- theme_minimal(base_size = 10) +
+  theme(
+    plot.title    = element_text(face = "bold", size = 10),
+    plot.subtitle = element_text(color = "grey40", size = 8),
+    legend.position = "bottom",
+    legend.key.size = unit(0.35, "cm"),
+    legend.text = element_text(size = 7),
+    axis.text   = element_text(size = 8),
+    strip.text  = element_text(size = 8, face = "bold")
+  )
+theme_set(theme_paper)
+```
+
+\newpage
+\tableofcontents
+
+\newpage
+
+# Introduction: The Andalusian Echo Chamber
+
+Political communication in multilevel democracies is rarely confined to the
+jurisdictional boundaries of a given legislature. Regional parliaments, while
+institutionally mandated to address the specific concerns of their constituent
+territories, frequently serve as arenas for national-level ideological conflict
+[@astudillo_pallares2013]. Yet the extent to which this extraterritorial
+displacement occurs---and the discursive mechanisms through which it operates---has
+received comparatively little systematic attention in the scholarly literature.
+This paper addresses that gap by examining a striking empirical puzzle: in the
+Parliament of Andalusia, approximately 8 per cent of all plenary interventions
+contain an explicit reference to Catalonia, rising to 15 per cent among Vox
+parliamentarians.
+
+The puzzle is analytically significant for at least three reasons. First,
+Andalusia and Catalonia are geographically distant, economically distinct, and
+institutionally autonomous communities with divergent political traditions.
+There is no obvious *functional* reason why the Andalusian assembly should
+devote substantial debating time to Catalan politics. Second, the volume of
+references is not evenly distributed across the political spectrum: it is
+overwhelmingly concentrated in the right-wing parties (PP and Vox), and
+overwhelmingly hostile in tone. Third, the Twelfth Legislature (2022--present)
+coincides with a period of particular salience: the PP holds an absolute majority
+in Andalusia while the central government in Madrid depends on the parliamentary
+support of Catalan independence parties, creating an acute structural tension
+between national and subnational political logics.
+
+We argue that these references do not represent spontaneous political commentary
+but rather a coherent discursive strategy: the systematic instrumentalization of
+Catalonia as a foil to frame domestic political competition, mobilize partisan
+loyalties, and delegitimize rivals---a phenomenon we conceptualize as *strategic
+Catalanophobia*. Drawing on a fully automated, methodologically validated pipeline
+for corpus construction and LLM-based content classification, we provide the first
+systematic empirical mapping of this phenomenon in the Twelfth Andalusian Legislature
+(2022--2025).
+
+The remainder of the paper is structured as follows. Section 2 develops the
+theoretical framework, integrating framing theory, territorial grievance
+literature, and the emerging scholarship on affective polarization in Spain.
+Section 3 describes the data and methodology, including the measurement
+validation protocol. Section 4 presents the empirical results. Section 5
+offers a theoretical discussion and conclusions.
+
+# Theoretical Framework
+
+## Framing and Political Elites
+
+The concept of framing in political communication refers to the process by which
+political actors "select some aspects of a perceived reality and make them more
+salient in a communicating text, in such a way as to promote a particular problem
+definition, causal interpretation, moral evaluation, and/or treatment recommendation"
+[@entman1993, p. 52]. Framing is not merely a matter of rhetoric: by activating
+different cognitive schemas, elite frames shape how mass audiences interpret
+political events and distribute attributions of responsibility [@chong_druckman2007].
+The choice of frame is therefore inherently strategic, reflecting not only
+ideological commitments but also calculations about electoral mobilization and
+coalition maintenance.
+
+In the context of multilevel polities, frame selection by regional legislators
+takes on additional dimensions. Regional parliaments occupy an intermediate
+position in the political system: their members are simultaneously local
+representatives and members of national party organizations, making them
+susceptible to pressures from both levels of the political hierarchy
+[@astudillo_pallares2013]. When national-level partisan conflicts become
+sufficiently salient, regional parliaments may serve as "resonance chambers"
+that amplify and locally adapt central political narratives. The Andalusian
+case offers an unusually clear instance of this dynamic, given the structural
+asymmetry between the regional government (PP absolute majority) and the
+national government (dependent on Catalan independence parties).
+
+## Territorial Grievance and Interregional Competition
+
+Spain's system of fiscal decentralization has historically generated significant
+interregional distributional conflicts [@lopez_laborda2006]. The negotiation of
+regional financing arrangements is a perennial source of political contention,
+and references to Catalonia frequently appear in this context: the perception
+that Madrid has granted fiscal concessions to Catalonia at the expense of other
+communities---particularly Andalusia, Spain's most populous region---is a
+recurring motif in Andalusian political discourse [@amat2012].
+
+The grievance frame (*Grievance_Economics* in our coding scheme) mobilizes a
+specific causal story: resources that should flow to Andalusia are being diverted
+to Catalonia as the price of parliamentary support. This narrative has a
+particularly strong popular resonance in a region with persistent structural
+unemployment and high dependence on central government transfers. It also serves
+a dual function: simultaneously legitimizing claims for greater regional resources
+and delegitimizing the national government that is seen to be complicit in
+Andalusia's disadvantage.
+
+## Affective Polarization and the Territorial Cleavage
+
+Recent scholarship on affective polarization in Spain has highlighted the extent
+to which the territorial dimension---particularly the Catalan independence
+conflict---has restructured the emotional landscape of Spanish politics
+[@miller_torcal2020; @rodon2023]. The emergence of Vox as a major electoral force
+since 2018 has intensified this dynamic: the party's foundational narrative is
+organized around the defence of national unity against Catalan and Basque
+secessionism, and its electoral success has pressured the PP to compete on
+similar terrain [@meguid2005].
+
+The concept of affective polarization [@iyengar_westwood2015] is directly
+applicable to this context: Catalonia functions not merely as a policy debate
+but as a negative reference point---an "out-group" whose presence in political
+discourse serves primarily to consolidate in-group (right-wing, Spanish
+nationalist) identities. On this reading, the frequency and hostility of
+Catalan references in Andalusian plenary debates reflects not an intrinsic
+interest in Catalan affairs but a strategic use of Catalonia to perform and
+reinforce partisan belonging. The moral dimension of this conflict is further
+analysed in @sanjaume2020, who situates the territorial dispute within broader
+frameworks of political legitimacy and recognition.
+
+# Data and Methodology
+
+## Corpus Construction
+
+Our corpus comprises all plenary interventions recorded in the videoteca
+(video archive) of the Parliament of Andalusia for the Twelfth Legislature
+(2022--2025), the current legislature in which the PP holds an absolute majority.
+The data were obtained through a multi-stage automated pipeline. In the first
+stage, a web scraper extracted the catalogue of plenary sessions (N = 189
+sessions) and resolved the internal session identifiers (`id_master`) by
+visiting each video page and parsing a JSPLAYLIST block embedded in the HTML
+source. In the second stage, a session-level API was queried to obtain the
+hierarchical structure of each session (agenda points and speakers), and a
+speaker-level API was queried to obtain full speech-to-text (STT) transcriptions
+for each individual intervention. The resulting corpus contains **9,942 plenary
+interventions** spanning three years of parliamentary activity.
+
+Each intervention was matched, via normalized name-matching, to a registry of
+deputies and government members, enabling the assignment of party affiliation,
+parliamentary group, and legislature. Government members (consejeros and consejeras
+of the Junta de Andalucía) who appeared in plenary sessions without holding
+a parliamentary seat were identified separately and assigned to their respective
+parties.
+
+## Detection of Catalan References
+
+Initial detection of interventions containing references to Catalonia was
+performed using a regular expression (REGEX) designed to capture both direct
+toponym references and associated political vocabulary:
+
+$$\texttt{(?i)(catalu[\~{n}n]a \,|\, catalan(es|as|\'{a}n)? \,|\, independentis(mo|tas?) \,|\, separatis(mo|tas?) \,|\, golpistas?)}$$
+
+This extended pattern was developed inductively: a preliminary regex
+(`catalu[ñn]a`) was applied to extract a sub-corpus of 200-word context
+windows around each initial match, which was then examined to identify
+additional lexical forms used to refer to Catalonia or the independence
+movement. The final regex detects 792 interventions (8.0\% of the corpus),
+ranging from 15.0\% of Vox interventions to 6.0\% of PSOE interventions
+(see Figure 1).
+
+## LLM Classification and Measurement Validation
+
+The 792 detected interventions were classified using GPT (OpenAI), following
+the measurement validation framework proposed by @halterman_keith2025 for
+the use of LLMs as coding instruments in political science. Two core
+methodological safeguards were implemented.
+
+First, **blind coding**: the model received only the text of each
+intervention, with no information about the speaker's identity, party
+affiliation, or legislative context. This design eliminates the risk that
+the model's output reflects prior knowledge about the speaker rather than
+the textual content of the intervention---a form of construct invalidity
+that has been identified as a significant concern in LLM-based annotation
+[@grimmer_stewart2013].
+
+Second, **structured output**: the model was constrained to return a JSON
+object conforming to a predefined schema, enforcing the valid value sets for
+each variable. This eliminates free-text hallucination and ensures
+categorical consistency across all 792 classifications.
+
+The classification instrument (codebook) covers two dimensions:
+
+**Sentiment** (`sentiment_cat`): the affective orientation of the intervention
+toward Catalan institutions, the Catalan political movement, or Catalan society.
+Three categories are distinguished: *Hostil_Negatiu* (hostile/negative:
+pejorative, alarmist, or delegitimizing language); *Neutral_Institucional*
+(neutral: factual references, statistics, procedural discussion); and
+*Empàtic_Positiu* (empathetic/positive: solidarity, Catalonia as a positive
+reference, dialogue-oriented language).
+
+**Primary Frame** (`primary_frame`): the dominant discursive lens through which
+the speaker introduces Catalonia into the Andalusian debate. Five categories
+are distinguished: *Electoral_Weaponization* (Catalan pacts used to attack
+national rivals); *Constitutional_Threat* (Catalonia as a threat to national
+unity or the rule of law); *Grievance_Economics* (Andalusia as fiscally
+disadvantaged by concessions to Catalonia); *Positive_Reference* (Catalonia
+as a positive policy model); and *Other* (references that fit none of the
+above categories).
+
+Each classification also includes a *chain of thought* field in which the
+model articulates its reasoning with explicit reference to the codebook's
+exclusion rules, and a *confidence score* (0--1). The mean confidence across
+all 792 classifications is 0.88 (SD = 0.08), suggesting high model certainty.
+
+# Results: The Anatomy of Hostility
+
+## The Intensity and Distribution of Catalan References
+
+Figure 1 displays the proportion of interventions containing Catalan references
+by party. The variation across the political spectrum is striking. Vox records
+the highest rate (15.0\%, N = 112), followed by Por Andalucía (9.8\%, N = 64)
+and Adelante Andalucía (8.1\%, N = 30). The PP, as the dominant party in the
+legislature, records 7.6\% (N = 490)---a lower rate than Vox but a substantially
+larger absolute volume. The PSOE, in opposition, records the lowest rate (6.0\%,
+N = 82). The temporal distribution (Figure 2) reveals that references are not
+uniformly distributed across the legislature but cluster around specific political
+events: the approval of national budgets, debates on regional financing, and episodes
+of political tension between the central government and Catalan parties.
+
+```{r fig-pct-partit}
+#| fig-cap: "Proportion of interventions containing Catalan references, by party. The horizontal axis shows the percentage of each party's total plenary interventions that contain at least one match to the extended Catalonia regex. N denotes the absolute number of interventions classified."
+#| fig-height: 3.2
+
+corpus |>
+  filter(!is.na(partit)) |>
+  group_by(partit) |>
+  summarise(n = n(), n_cat = sum(mencio_cat_ext, na.rm = TRUE),
+            pct = 100*n_cat/n, .groups = "drop") |>
+  mutate(
+    partit = factor(partit, levels = rev(PARTY_ORDER)),
+    label  = sprintf("%.1f%% (N=%d)", pct, n_cat)
+  ) |>
+  ggplot(aes(pct, partit)) +
+  geom_col(fill = "#2C3E50", alpha = 0.8, width = 0.6) +
+  geom_text(aes(label = label), hjust = -0.08, size = 2.8) +
+  scale_x_continuous(labels = label_percent(scale = 1),
+                     expand = expansion(mult = c(0, 0.22)),
+                     limits = c(0, 21)) +
+  labs(x = "% of party interventions", y = NULL)
+```
+
+```{r fig-temporal}
+#| fig-cap: "Temporal evolution of Catalan references. Upper panel: absolute number of interventions per month. Lower panel: proportion of monthly interventions containing Catalan references, with a LOESS smoother (shaded 95\\% confidence interval)."
+#| fig-height: 4.2
+
+cat_mes <- corpus |>
+  filter(!is.na(data_mes)) |>
+  group_by(data_mes) |>
+  summarise(n_total = n(), n_cat = sum(mencio_cat_ext, na.rm = TRUE),
+            pct = 100*n_cat/n_total, .groups = "drop")
+
+p1 <- ggplot(cat_mes, aes(data_mes, n_cat)) +
+  geom_col(fill = "#2C3E50", alpha = 0.75, width = 20) +
+  scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
+  labs(y = "N interventions", x = NULL,
+       title = "Monthly count of interventions with Catalan references")
+
+p2 <- ggplot(cat_mes, aes(data_mes, pct)) +
+  geom_line(color = "#2C3E50", linewidth = 0.8) +
+  geom_smooth(method = "loess", se = TRUE, color = "#C0392B",
+              fill = "#C0392B", alpha = 0.15, linewidth = 0.6) +
+  scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
+  scale_y_continuous(labels = label_percent(scale = 1), limits = c(0, NA)) +
+  labs(y = "% of monthly interventions", x = NULL,
+       title = "Proportion of interventions with Catalan references")
+
+p1 / p2
+```
+
+## The Sentiment Gap: Hostility as a Right-Wing Characteristic
+
+The most striking finding of the analysis concerns the distribution of sentiment
+across the political spectrum. At the aggregate level, 62.6\% of all classified
+interventions are coded as *Hostil_Negatiu*, 32.7\% as *Neutral_Institucional*,
+and a mere 4.7\% as *Empàtic_Positiu*. However, these global figures conceal a
+profound asymmetry between the right and left blocs.
+
+Table 1 and Figure 3 present the sentiment distribution by party. Among right-wing
+parties, hostility is overwhelmingly dominant: Vox records 85.7\% hostile
+interventions and the PP records 78.6\%. By contrast, the left-wing parties
+exhibit markedly different profiles: the PSOE records only 6.1\% hostile
+interventions (with 68.3\% neutral and 25.6\% empathetic), while Por Andalucía
+records 9.4\% hostile (76.6\% neutral, 14.1\% empathetic) and Adelante Andalucía
+6.7\% hostile (83.3\% neutral, 10.0\% empathetic). The gap between the most
+hostile party (Vox, 85.7\%) and the least hostile (PSOE, 6.1\%) is 79.6
+percentage points---a difference of extraordinary magnitude that suggests the
+two blocs are operating in almost entirely different discursive registers when
+referring to Catalonia.
+
+```{r tbl-sentiment}
+#| tbl-cap: "Sentiment distribution by party (percentage of classified interventions). N denotes the total number of LLM-classified interventions per party. Rows are sorted by descending percentage of hostile interventions."
+
+llm |>
+  filter(!is.na(partit)) |>
+  group_by(Partit = factor(partit, levels = PARTY_ORDER)) |>
+  summarise(
+    N           = n(),
+    `Hostile (%)` = round(100*mean(llm_sentiment_cat=="Hostil_Negatiu"),   1),
+    `Neutral (%)` = round(100*mean(llm_sentiment_cat=="Neutral_Institucional"),1),
+    `Empathetic (%)` = round(100*mean(llm_sentiment_cat=="Empàtic_Positiu"),1),
+    .groups = "drop"
+  ) |>
+  arrange(desc(`Hostile (%)`)) |>
+  kable(booktabs = TRUE, linesep = "",
+        align = c("l","r","r","r","r")) |>
+  kable_styling(latex_options = c("hold_position","striped"),
+                font_size = 9, full_width = FALSE)
+```
+
+```{r fig-sentiment}
+#| fig-cap: "Sentiment distribution by party (stacked bar, percentage of classified interventions). Parties are ordered by descending proportion of hostile interventions."
+#| fig-height: 3.2
+
+llm |>
+  filter(!is.na(partit)) |>
+  count(partit, llm_sentiment_cat) |>
+  group_by(partit) |>
+  mutate(pct = 100*n/sum(n)) |>
+  ungroup() |>
+  mutate(
+    partit = factor(partit, levels = rev(PARTY_ORDER)),
+    llm_sentiment_cat = factor(llm_sentiment_cat,
+      levels = c("Hostil_Negatiu","Neutral_Institucional","Empàtic_Positiu"),
+      labels = c("Hostile","Neutral","Empathetic"))
+  ) |>
+  ggplot(aes(pct, partit, fill = llm_sentiment_cat)) +
+  geom_col(position = "stack", alpha = 0.9, width = 0.65) +
+  geom_text(aes(label = if_else(pct > 5, paste0(round(pct), "%"), "")),
+            position = position_stack(vjust = 0.5),
+            size = 2.6, color = "white", fontface = "bold") +
+  scale_fill_manual(values = c("Hostile" = "#C0392B",
+                               "Neutral" = "#95A5A6",
+                               "Empathetic" = "#27AE60"),
+                    name = "Sentiment") +
+  scale_x_continuous(labels = label_percent(scale = 1),
+                     expand = expansion(mult = c(0, 0.02))) +
+  labs(x = "% of classified interventions", y = NULL)
+```
+
+## Divergence within the Right: A Discursive Division of Labour
+
+Among parties on the right, the sentiment picture is one of shared hostility; yet
+the *type* of hostility differs substantially. This divergence is captured by the
+primary frame variable.
+
+Figure 4 and Table 2 reveal that both PP and Vox share *Electoral Weaponization*
+as their most frequent frame (50.0\% each), using Catalan political dynamics
+primarily to attack the national government and its left-wing supporters. However,
+their secondary frames diverge sharply: the PP concentrates 25.9\% of its
+interventions in *Grievance_Economics*---a frame that connects Catalonia to the
+regional financing debate and Andalusia's fiscal disadvantage---while Vox
+concentrates 31.2\% in *Constitutional_Threat*, a frame that foregrounds alarm
+about national unity and the legitimacy of the political order.
+
+This divergence is substantively significant. The PP's *Grievance_Economics*
+frame is essentially redistributive: it mobilizes Andalusian identity against
+perceived fiscal injustice, positioning the PP as the defender of Andalusian
+interests against a national government that sacrifices regional equity for
+coalition survival. Vox's *Constitutional_Threat* frame is instead
+identitarian-authoritarian: it mobilizes Spanish nationalist sentiment by
+representing Catalonia as an existential menace to the constitutional order.
+The two frames appeal to distinct emotional registers and activate different
+aspects of the territorial cleavage---economic resentment in the PP's case,
+and national security anxiety in Vox's.
+
+For the left-wing parties, the frame distribution is also distinctive: the
+PSOE records 53.7\% in the *Other* category (reflecting mentions that are
+largely incidental or procedural), and Por Andalucía similarly records 60.9\%
+in *Other*. Electoral Weaponization is present on the left as well (PSOE:
+29.3\%; Adelante Andalucía: 30.0\%), but it operates in the reverse direction:
+these parties use Catalan references to attack the PP and Vox for their alleged
+manipulation of the territorial issue for partisan ends.
+
+```{r fig-frame}
+#| fig-cap: "Primary discursive frame by party (stacked bar, percentage of classified interventions). Parties are ordered by descending proportion of adversarial frames (Electoral Weaponization + Constitutional Threat)."
+#| fig-height: 3.5
+
+llm |>
+  filter(!is.na(partit)) |>
+  count(partit, llm_primary_frame) |>
+  group_by(partit) |>
+  mutate(pct = 100*n/sum(n)) |>
+  ungroup() |>
+  mutate(
+    adv = ifelse(llm_primary_frame %in%
+                   c("Electoral_Weaponization","Constitutional_Threat"), pct, 0)
+  ) |>
+  group_by(partit) |>
+  mutate(adv_total = sum(adv)) |>
+  ungroup() |>
+  mutate(
+    partit = fct_reorder(factor(partit, levels = PARTY_ORDER), adv_total),
+    llm_primary_frame = factor(llm_primary_frame, levels = rev(FRAME_LVLS),
+      labels = rev(c("Electoral Weaponization","Constitutional Threat",
+                     "Grievance Economics","Positive Reference","Other")))
+  ) |>
+  ggplot(aes(pct, partit, fill = llm_primary_frame)) +
+  geom_col(position = "stack", alpha = 0.9, width = 0.65) +
+  geom_text(aes(label = if_else(pct > 6, paste0(round(pct), "%"), "")),
+            position = position_stack(vjust = 0.5),
+            size = 2.5, color = "white", fontface = "bold") +
+  scale_fill_manual(
+    values = c(
+      "Electoral Weaponization" = "#6C3483",
+      "Constitutional Threat"   = "#7B241C",
+      "Grievance Economics"     = "#D35400",
+      "Positive Reference"      = "#1A8A6A",
+      "Other"                   = "#BDC3C7"
+    ), name = "Frame") +
+  scale_x_continuous(labels = label_percent(scale = 1),
+                     expand = expansion(mult = c(0, 0.02))) +
+  labs(x = "% of classified interventions", y = NULL)
+```
+
+```{r tbl-frame}
+#| tbl-cap: "Primary discursive frame by party (percentage of classified interventions). EW = Electoral Weaponization; CT = Constitutional Threat; GE = Grievance Economics; PR = Positive Reference. N denotes total classified interventions. Rows sorted by descending adversarial frame proportion."
+
+llm |>
+  filter(!is.na(partit)) |>
+  count(Partit = factor(partit, levels = PARTY_ORDER), frame = llm_primary_frame) |>
+  group_by(Partit) |>
+  mutate(pct = round(100*n/sum(n), 1), N = sum(n)) |>
+  ungroup() |>
+  pivot_wider(id_cols = c(Partit, N), names_from = frame,
+              values_from = pct, values_fill = 0) |>
+  select(Partit, N,
+         `EW (%)` = any_of("Electoral_Weaponization"),
+         `CT (%)` = any_of("Constitutional_Threat"),
+         `GE (%)` = any_of("Grievance_Economics"),
+         `PR (%)` = any_of("Positive_Reference"),
+         `Other (%)` = any_of("Other")) |>
+  arrange(desc(rowSums(across(any_of(c("EW (%)","CT (%)")), \(x) replace_na(x,0))))) |>
+  kable(booktabs = TRUE, linesep = "",
+        align = c("l","r","r","r","r","r","r")) |>
+  kable_styling(latex_options = c("hold_position","striped"),
+                font_size = 9, full_width = FALSE)
+```
+
+## Temporal Dynamics: Intensification and Electoral Cycles
+
+The temporal evolution of Catalan references (Figure 2) is not monotone. A
+notable intensification is visible during 2023, coinciding with the national
+electoral cycle (general elections of July 2023) and the subsequent negotiations
+over the investiture of the central government---a process that involved
+controversial agreements with Catalan independence parties, including a contested
+amnesty law. This pattern is consistent with the Electoral Weaponization frame:
+the salience of Catalan references in the Andalusian parliament tracks, to a
+significant degree, the salience of Catalonia in national-level political conflict.
+
+Figure 5 disaggregates the temporal evolution by party and sentiment. The PP
+and Vox display consistently high rates of hostile framing throughout the
+legislature, with notable spikes during the periods described above. Left-wing
+parties display broadly stable, low rates of hostility, with some increase in
+empathetic framing during periods of dialogue between the central government
+and Catalan institutions.
+
+```{r fig-temporal-sent}
+#| fig-cap: "Quarterly evolution of hostile sentiment by party (percentage of classified interventions per quarter). Only quarters with at least three classified interventions are shown."
+#| fig-height: 3.8
+
+llm |>
+  filter(!is.na(partit), !is.na(data_trim)) |>
+  group_by(data_trim, partit = factor(partit, levels = PARTY_ORDER)) |>
+  summarise(n_tot = n(),
+            pct_host = 100*mean(llm_sentiment_cat == "Hostil_Negatiu"),
+            .groups = "drop") |>
+  filter(n_tot >= 3) |>
+  ggplot(aes(data_trim, pct_host, color = partit)) +
+  geom_line(linewidth = 0.7, alpha = 0.85) +
+  geom_point(size = 1.5, alpha = 0.8) +
+  scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
+  scale_y_continuous(labels = label_percent(scale = 1), limits = c(0, 105)) +
+  labs(x = NULL, y = "% hostile interventions",
+       color = "Party",
+       title = "Quarterly proportion of hostile sentiment toward Catalonia, by party")
+```
+
+# Discussion: Strategic Catalanophobia
+
+## Conceptualizing the Pattern
+
+The results presented above support a coherent interpretive framework that we
+term *strategic Catalanophobia*. The concept denotes the systematic, strategically
+motivated deployment of negative discursive representations of Catalonia---its
+politics, institutions, and political movement---as a mechanism for achieving
+domestic political goals in a regional parliament. The term "strategic" is
+important: the hostility toward Catalonia visible in Andalusian plenary debates
+is not a spontaneous or incidental expression of political sentiment but a
+deliberate communicative choice, reflected in the consistency of the pattern
+across speakers, parliamentary groups, and issue contexts.
+
+Strategic Catalanophobia serves multiple, overlapping functions within the
+Andalusian political field. First, it provides right-wing parties with a
+*legitimizing narrative for governance*: by attributing Andalusia's fiscal
+difficulties to Catalan exceptionalism and the national government's capitulation
+to Catalan demands, the PP can mobilize a discourse of regional victimhood that
+simultaneously positions Andalusia as disadvantaged and the PP as its defender.
+Second, it serves as *opposition weaponization*: the PSOE, in government at the
+national level, is held accountable in the Andalusian parliament for decisions
+made in Madrid, creating a form of vertical displacement of political
+accountability that complicates the attribution of responsibility in citizens'
+minds. Third, for Vox, it provides a *nationalist mobilization frame*: by
+representing Catalonia as an existential threat to Spain, Vox activates the
+constitutional-emotional register of Spanish nationalism and distinguishes itself
+from the PP through the radicalism of its framing.
+
+## Implications for Multilevel Democracy
+
+The phenomenon of strategic Catalanophobia raises broader questions about the
+health of multilevel democracy in Spain. When regional parliaments function
+primarily as stages for national-level partisan combat---importing the conflicts
+of Madrid into the deliberations of Seville---they risk losing their distinctive
+function as arenas for territorial self-governance [@astudillo_pallares2013].
+The substitution of substantive debate about regional policy for performative
+confrontation about national political conflicts represents a form of deliberative
+impoverishment that may have consequences for the quality of regional democratic
+representation.
+
+Moreover, the consistent association of Catalonia with hostility in the dominant
+discursive output of Andalusian parliamentarians contributes to a wider process
+of affective polarization along territorial lines [@miller_torcal2020; @rodon2023].
+Citizens who receive their political information through the filter of Andalusian
+parliamentary debate are exposed to an overwhelmingly negative representation of
+Catalan politics, which may reinforce negative inter-territorial attitudes and
+reduce the political space available for constructive dialogue about Spain's
+constitutional architecture [@sanjaume2020].
+
+The divergence between the PP and Vox within the right-wing bloc---the PP's
+emphasis on economic grievance and Vox's emphasis on constitutional threat---suggests
+that competitive dynamics within the right may drive a process of discursive
+radicalization, as parties seek to differentiate their Catalan-reference strategies
+in response to electoral pressure [@meguid2005]. The PP's pivot toward the
+Grievance Economics frame, in particular, may represent an attempt to maintain
+credibility with an Andalusian electorate for whom fiscal fairness is a concrete,
+material concern, while simultaneously appropriating a theme (Catalan privilege)
+that is central to Vox's electoral appeal.
+
+## Methodological Considerations
+
+Our analysis relies on LLM-based classification of textual content, a methodology
+that is rapidly gaining traction in political science but remains subject to
+important caveats [@grimmer_stewart2013; @halterman_keith2025]. Several design
+choices deserve explicit consideration. The blind-coding protocol---in which the
+model receives no information about the speaker's party or identity---eliminates
+a significant potential source of bias, but it also means that the model cannot
+leverage contextual information that a human coder might use to interpret ambiguous
+passages. The structured output constraint ensures categorical consistency but
+may impose artificial discretization on phenomena that are inherently continuous.
+And the use of a single-model classification system---rather than a multi-model
+ensemble or a human-LLM hybrid---limits the ability to assess inter-rater
+reliability in traditional terms.
+
+The mean confidence score of 0.88 across all classifications suggests that the
+vast majority of interventions present unambiguous coding decisions; nonetheless,
+a systematic validation exercise---such as the comparison of LLM outputs with
+expert human codings on a random sample---would be required before the findings
+are treated as definitive. We regard the present analysis as a substantively
+illuminating exploratory study whose conclusions warrant subsequent validation.
+
+# Conclusion
+
+This paper has provided the first systematic empirical analysis of how Catalonia
+is discursively framed in the Parliament of Andalusia. Our core findings can
+be summarized as follows. References to Catalonia constitute 8 per cent of all
+plenary interventions and reach 15 per cent among Vox parliamentarians. Among
+classified interventions, 62.6 per cent are hostile in sentiment and 44.6 per cent
+deploy an Electoral Weaponization frame. The sentiment gap between the right
+(78--86\% hostile) and left (6--9\% hostile) blocs is extraordinary in
+magnitude. Within the right, PP and Vox share Electoral Weaponization as their
+primary frame but diverge in secondary framing---the PP toward Grievance
+Economics, Vox toward Constitutional Threat---suggesting a discursive division
+of labour that reflects their distinct electoral positions and base constituencies.
+
+We have conceptualized these patterns under the rubric of *strategic Catalanophobia*:
+a deliberate communicative strategy that serves simultaneously to mobilize
+regional identity, attack national rivals, and avoid substantive debate about
+domestic governance. This strategy is not unique to Andalusia, but the
+combination of Andalusia's size (Spain's most populous autonomous community),
+the PP's absolute majority, and the structural tension between regional and
+national government makes the Andalusian parliament an unusually clear and
+consequential instance of this phenomenon.
+
+Future research should extend the analysis to other regional parliaments, enabling
+comparative assessment of the extent to which strategic Catalanophobia is a
+specifically Andalusian phenomenon or a general feature of right-wing regional
+politics in Spain. The methodology developed here---combining STT transcription,
+regex-based corpus construction, and validated LLM classification---offers a
+replicable template for this comparative enterprise.
+
+\newpage
+
+# References
+
+::: {#refs}
+:::

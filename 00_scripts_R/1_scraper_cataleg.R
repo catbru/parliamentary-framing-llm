@@ -6,9 +6,10 @@
 #  - 15 sessions per pàgina, en elements <div class="list-result-item">
 #  - Títol: a.h2 > span[title]
 #  - URL del vídeo: a.h2[href]
-#  - id_master: extret directament de la URL del poster (img[src*="/posters/"]),
-#    que conté un token base64 amb {"subject_klass":"item","subject_id":<N>}
-#    → NO cal visitar cada pàgina /watch?id=... per separat.
+#  - id_master: extret visitant cada pàgina /watch?id=... i llegint el camp
+#    resources_url del bloc JSPLAYLIST: subject_id=<N>.
+#    NOTA: El subject_id del poster (img[src*="/posters/"]) és l'ID de la IMATGE
+#    del poster, NO el de la sessió de vídeo → NO es pot usar per a id_master.
 #  - Paginació: /search?page=N&gbody_id=3378&legs_id=<ID>&search=&view_type=list
 #
 # legs_id descoberts inspeccionant el <select> de la pàgina de cerca:
@@ -34,14 +35,17 @@ LEGS_MAP <- c("13" = "10", "14" = "11", "3377" = "12")
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
-# Descodifica el token base64 del poster i retorna el subject_id (int)
-decode_poster_id <- function(src) {
+# Visita la pàgina /watch?id=... i extreu el subject_id real del bloc JSPLAYLIST.
+# El camp resources_url conté subject_id=<N> que és el ID_MASTER correcte.
+# (El subject_id del poster és l'ID de la imatge, no de la sessió de vídeo.)
+fetch_master_id <- function(href) {
   tryCatch({
-    b64 <- str_match(src, "/posters/([A-Za-z0-9+/=]+)")[, 2]
-    if (is.na(b64)) return(NA_integer_)
-    json_str <- rawToChar(jsonlite::base64_dec(b64))
-    parsed   <- fromJSON(json_str)
-    as.integer(parsed$subject_id)
+    resp <- safe_get(href)
+    if (is.null(resp)) return(NA_integer_)
+    body <- resp_body_string(resp)
+    m <- str_match(body, "resources_url='[^']*subject_id=([0-9]+)")
+    if (is.na(m[1, 2])) return(NA_integer_)
+    as.integer(m[1, 2])
   }, error = function(e) NA_integer_)
 }
 
@@ -102,14 +106,9 @@ get_page_videos <- function(page_num, legs_id = 3377) {
 
     url_id <- extract_url_id(href)
 
-    # id_master des de la imatge del poster (element germà en el pare)
-    parent     <- xml2::xml_parent(item)
-    poster_img <- parent |> html_element("img[src*='/posters/']")
-    id_master  <- if (!is.null(poster_img) && !is.na(poster_img)) {
-      decode_poster_id(poster_img |> html_attr("src"))
-    } else {
-      NA_integer_
-    }
+    # id_master des del JSPLAYLIST de la pàgina /watch (l'únic mètode fiable)
+    id_master <- fetch_master_id(href)
+    polite_delay(0.5)
 
     # Data de la sessió (text secundari)
     data_div  <- item |> html_element("div[style*='margin-top:10px']")
