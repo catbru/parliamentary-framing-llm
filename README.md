@@ -54,10 +54,22 @@ Cada una de les 792 intervencions va ser classificada per GPT seguint un codeboo
 
 Dos informes Quarto combinen el corpus STT amb les anotacions del LLM:
 
-- **Script 4** — visió general del corpus: cobertura de sessions, identificació d'oradors, evolució temporal de mencions, finestres de context.
+- **Script 4** — visió general del corpus: cobertura de sessions, identificació d'oradors, evolució temporal de mencions, finestres de context.  
 - **Script 6** — anàlisi de les classificacions: distribució de sentiment i frame per partit, evolució trimestral, mapes de calor, top de diputats i mostres qualitatives.
 
-**Sortida:** `docs/analysis/4_analisi_descriptiu.html` · `docs/analysis/6_analisi_i_plots.html`
+#### Explora els informes
+
+<p>
+  <a href="https://catbru.github.io/parliamentary-framing-llm/analysis/4_analisi_descriptiu.html">
+    <img src="https://img.shields.io/badge/Informe%204-Visió%20descriptiva-1f6feb?style=for-the-badge">
+  </a>
+  <a href="https://catbru.github.io/parliamentary-framing-llm/analysis/6_analisi_i_plots.html">
+    <img src="https://img.shields.io/badge/Informe%206-Anàlisi%20LLM%20%26%20Framing-6f42c1?style=for-the-badge">
+  </a>
+</p>
+
+**Sortida local:**  
+`docs/analysis/4_analisi_descriptiu.html` · `docs/analysis/6_analisi_i_plots.html`
 
 ---
 
