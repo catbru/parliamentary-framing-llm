@@ -1,4 +1,4 @@
-# Andalusia-Mostra — Pipeline de Recerca Parlamentària Assistida per IA
+# Parliamentary Framing LLM
 
 > **Repositori de mostra.** Aquest projecte és una demostració funcional d'un pipeline complet de ciència social computacional assistit per IA, des del raspat brut de l'API fins a un esborrany de paper acadèmic. Utilitza el Parlament d'Andalusia com a cas d'estudi però el pipeline està dissenyat com a plantilla replicable per a qualsevol altre ús.
 
