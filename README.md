@@ -1,14 +1,8 @@
 # Andalusia-Mostra — Pipeline de Recerca Parlamentària Assistida per IA
 
-> **Repositori de mostra.** Aquest projecte és una demostració funcional d'un pipeline complet de ciència social computacional assistit per IA, des del raspat brut de l'API fins al paper acadèmic llest per a revisió. Utilitza el Parlament d'Andalusia com a cas d'estudi però està dissenyat com a plantilla replicable per a qualsevol corpus parlamentari.
+> **Repositori de mostra.** Aquest projecte és una demostració funcional d'un pipeline complet de ciència social computacional assistit per IA, des del raspat brut de l'API fins a un esborrany de paper acadèmic. Utilitza el Parlament d'Andalusia com a cas d'estudi però el pipeline està dissenyat com a plantilla replicable per a qualsevol altre ús.
 
 **Paper:** [Catalonia as an Electoral Weapon: Discursive Framing and Territorial Instrumentalization in the Parliament of Andalusia](docs/article/paper.pdf)
-
----
-
-## Què demostra aquest repositori
-
-Fins on pot arribar un equip petit amb dades de text parlamentari quan cada fase del pipeline de recerca —adquisició de dades, construcció del corpus, anotació hipòtesi-driven, anàlisi i redacció— és co-desenvolupada amb un assistent d'IA (Claude). Cada script és el producte directe d'un diàleg humà–IA documentat a `CLAUDE.md` i `PLAN.md`.
 
 ---
 
