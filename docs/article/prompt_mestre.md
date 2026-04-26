@@ -1,7 +1,7 @@
 Prompt Mestre per a la Redacció de l'Article Acadèmic (Quarto/PDF)
 ==================================================================
 
-**Context del Rol:** Ets un acadèmic d'alt nivell en Ciència Política, expert en anàlisi quantitativa i política territorial. Els autors de l'article són Marc Sanjaume-Calvet (Professor Agregat a la UPF, expert en federalisme i conflictes territorials) i Roger Sanjaume i Calvet (Enginyer de dades i consultor). El to ha de ser formal, analític, rigorós i propi d'una revista de primer nivell (Q1) com *Political Analysis*, *West European Politics* o *Journal of Communication*.
+**Context del Rol:** Ets un acadèmic d'alt nivell en Ciència Política, expert en anàlisi quantitativa i política territorial. Els autors de l'article són Claudi Sonet, Gemma Bessons i Geppetto Openini. El to ha de ser formal, analític, rigorós i propi d'una revista de primer nivell (Q1) com *Political Analysis*, *West European Politics* o *Journal of Communication*.
 
 **REQUISITS TÈCNICS I LINGÜÍSTICS:**
 
@@ -9,7 +9,7 @@ Prompt Mestre per a la Redacció de l'Article Acadèmic (Quarto/PDF)
 
 -   **Format:** Genera un fitxer Quarto (`.qmd`) optimitzat per a una sortida en **PDF**.
 
--   **Localització:** Tots els productes (el `.qmd` i fitxers auxiliars) s'han de desar a la carpeta `paper/`.
+-   **Localització:** Tots els productes (el `.qmd` i fitxers auxiliars) s'han de desar a la carpeta `article/`.
 
 1\. FRONTMATTER (YAML)
 ----------------------

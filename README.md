@@ -32,7 +32,7 @@ Un regex de base (`(?i)catalu[ñn]a`) va detectar mencions inicials de Catalunya
 
 ### 3 · Codebook i Anotació LLM
 
-Cada una de les 792 intervencions va ser classificada per GPT seguint un codebook estructurat amb dues dimensions:
+Cada una de les 792 intervencions és classificada per GPT seguint un codebook estructurat amb dues dimensions:
 
 | Variable | Categories |
 |---|---|
@@ -41,14 +41,13 @@ Cada una de les 792 intervencions va ser classificada per GPT seguint un codeboo
 
 **Garanties metodològiques** (seguint [Halterman & Keith, 2025](https://doi.org/10.1017/pan.2024.20)):
 
-- **Codificació cega** — el model només va rebre el text de la intervenció, sense identitat de l'orador ni partit.
-- **Sortida estructurada** — les respostes es van constraurar a un esquema JSON estricte via `ellmer::chat_structured()`, eliminant al·lucinacions i garantint categories vàlides.
-- **Cadena de raonament** — el model havia d'exposar el seu raonament amb referència explícita a les regles d'exclusió del codebook abans de classificar.
-- **Checkpoint incremental** — les classificacions s'escrivien fila a fila a `llm_progress.csv`, fent l'execució idempotent i tolerant a interrupcions.
+- **Codificació cega** — el model només rep el text de la intervenció, sense identitat de l'orador ni partit.
+- **Sortida estructurada** — les respostes es restringeixen a un esquema JSON estricte via `ellmer::chat_structured()`, eliminant al·lucinacions i garantint categories vàlides.
+- **Cadena de raonament** — el model ha d'exposar el seu raonament amb referència explícita a les regles d'exclusió del codebook abans de classificar.
+- **Checkpoint incremental** — les classificacions s'escriuen fila a fila a `llm_progress.csv`, fent l'execució idempotent i tolerant a interrupcions.
 
 **Sortida:** `02_dades_processades/llm_frames/llm_progress.csv` · `02_dades_processades/dataset_consolidat/corpus_amb_llm.csv`
 
----
 
 ### 4 · Anàlisi Descriptiu i de Framing
 
@@ -71,11 +70,10 @@ Dos informes Quarto combinen el corpus STT amb les anotacions del LLM:
 **Sortida local:**  
 `docs/analysis/4_analisi_descriptiu.html` · `docs/analysis/6_analisi_i_plots.html`
 
----
 
 ### 5 · Generació del Paper a partir d'un Prompt Mestre
 
-El paper acadèmic es va generar a partir de `docs/article/prompt_mestre.md`, un brief estructurat en markdown que especifica títol, autors, marc teòric, cites obligatòries, narrativa metodològica i resultats a integrar. Un assistent d'IA va traduir aquest brief en un document Quarto/PDF complet amb chunks de codi R integrats, bibliografia `biblatex` i figures de qualitat publicable.
+El paper acadèmic es genera a partir de `docs/article/prompt_mestre.md`, un brief estructurat en markdown que especifica títol, autors, marc teòric, cites obligatòries, narrativa metodològica i resultats a integrar. Un assistent d'IA tradueix aquest brief en un document Quarto/PDF complet amb chunks de codi R integrats, bibliografia `biblatex` i figures de qualitat publicable.
 
 **Sortida:** `docs/article/paper.pdf`
 
