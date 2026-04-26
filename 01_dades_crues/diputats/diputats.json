@@ -1,0 +1,2838 @@
+[
+  {
+    "slug": "alarcon-manas-maria-del-rosario",
+    "nom": "Alarcón Mañas, María del Rosario",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "albas-vives-maria-isabel",
+    "nom": "Albás Vives, María Isabel",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "alonso-alonso-luciano",
+    "nom": "Alonso Alonso, Luciano",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "aragon-ariza-francisco-javier",
+    "nom": "Aragón Ariza, Francisco Javier",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "arenas-bocanegra-francisco-javier",
+    "nom": "Arenas Bocanegra, Francisco Javier",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "arrabal-higuera-rocio",
+    "nom": "Arrabal Higuera, Rocío",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "ayala-asensio-lucia",
+    "nom": "Ayala Asensio, Lucía",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "barranco-rodriguez-mercedes",
+    "nom": "Barranco Rodríguez, Mercedes",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "benitez-galvez-libertad",
+    "nom": "Benítez Gálvez, Libertad",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "bosquet-aznar-marta",
+    "nom": "Bosquet Aznar, Marta",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "bueno-navarro-juan-francisco",
+    "nom": "Bueno Navarro, Juan Francisco",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "campos-lopez-daniel",
+    "nom": "Campos López, Daniel",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "carretero-espinosa-de-los-monteros-carmen",
+    "nom": "Carretero Espinosa de los Monteros, Carmen",
+    "legislatura": "10",
+    "leg_id": 13
+  },
+  {
+    "slug": "castellano-gamez-miguel",
+    "nom": "Castellano Gámez, Miguel",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "castro-roman-jose-antonio",
+    "nom": "Castro Román, José Antonio",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Izquierda Unida Los Verdes-Convocatoria por Andalucía",
+    "partit": "IU"
+  },
+  {
+    "slug": "cespedes-senovilla-carmen",
+    "nom": "Céspedes Senovilla, Carmen",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "cornejo-lopez-juan-maria",
+    "nom": "Cornejo López, Juan María",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "crespo-diaz-maria-carmen",
+    "nom": "Crespo Díaz, María Carmen",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "cruz-martinez-noemi",
+    "nom": "Cruz Martínez, Noemí",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "de-manuel-jerez-jesus-alberto",
+    "nom": "de Manuel Jerez, Jesús Alberto",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "diaz-robledo-julio-jesus",
+    "nom": "Díaz Robledo, Julio Jesús",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "duran-sanchez-juan-pablo",
+    "nom": "Durán Sánchez, Juan Pablo",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "escriva-torralva-marta",
+    "nom": "Escrivá Torralva, Marta",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "espinosa-lopez-rosalia-angeles",
+    "nom": "Espinosa López, Rosalía Ángeles",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "fernandez-ferrera-francisco-jesus",
+    "nom": "Fernández Ferrera, Francisco Jesús",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "ferreira-siles-juan-ramon",
+    "nom": "Ferreira Siles, Juan Ramón",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "ferrera-limon-diego",
+    "nom": "Ferrera Limón, Diego",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "ferriz-gomez-maria-de-los-angeles",
+    "nom": "Férriz Gómez, María de los Ángeles",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "funes-arjona-jose-antonio",
+    "nom": "Funes Arjona, José Antonio",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "garcia-anguita-miguel-angel",
+    "nom": "García Anguita, Miguel Ángel",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "garcia-bueno-maria-del-carmen",
+    "nom": "García Bueno, María del Carmen",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "garcia-carrasco-catalina-montserrat",
+    "nom": "García Carrasco, Catalina Montserrat",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "garcia-de-longoria-menduina-guillermo-jose",
+    "nom": "García de Longoria Menduiña, Guillermo José",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "garcia-hueso-amos",
+    "nom": "García Hueso, Amós",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "garcia-jimenez-ana-vanessa",
+    "nom": "García Jiménez, Ana Vanessa",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "garrido-moraga-antonio-manuel",
+    "nom": "Garrido Moraga, Antonio Manuel",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "gil-de-los-santos-juan-antonio",
+    "nom": "Gil de los Santos, Juan Antonio",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "gil-sanchez-felix",
+    "nom": "Gil Sánchez, Félix",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "gomez-corona-esperanza",
+    "nom": "Gómez Corona, Esperanza",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "gomez-dominguez-carmelo",
+    "nom": "Gómez Domínguez, Carmelo",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "gonzalez-rivera-manuel-andres",
+    "nom": "González Rivera, Manuel Andrés",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "gutierrez-valero-begona-maria",
+    "nom": "Gutiérrez Valero, Begoña María",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "hernandez-white-carlos",
+    "nom": "Hernández White, Carlos",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "hidalgo-garcia-jose-antonio",
+    "nom": "Hidalgo García, José Antonio",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "jimenez-barrios-manuel",
+    "nom": "Jiménez Barrios, Manuel",
+    "legislatura": "10",
+    "leg_id": 13
+  },
+  {
+    "slug": "jimenez-diaz-mario-jesus",
+    "nom": "Jiménez Díaz, Mario Jesús",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "jimenez-vilchez-maria-teresa",
+    "nom": "Jiménez Vílchez, María Teresa",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "latorre-ruiz-jose",
+    "nom": "Latorre Ruiz, José",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "lizarraga-mollinedo-maria-del-carmen",
+    "nom": "Lizárraga Mollinedo, María del Carmen",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "lopez-martinez-caridad",
+    "nom": "López Martínez, Caridad",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "maese-villacampa-araceli",
+    "nom": "Maese Villacampa, Araceli",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "maillo-canadas-antonio",
+    "nom": "Maíllo Cañadas, Antonio",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Izquierda Unida Los Verdes-Convocatoria por Andalucía",
+    "partit": "IU"
+  },
+  {
+    "slug": "manzano-perez-olga",
+    "nom": "Manzano Pérez, Olga",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "marin-lozano-juan-antonio",
+    "nom": "Marín Lozano, Juan Antonio",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "marquez-romero-maria",
+    "nom": "Márquez Romero, María",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "martin-fernandez-jose-maria",
+    "nom": "Martín Fernández, José María",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "martin-moya-aranzazu",
+    "nom": "Martín Moya, Aránzazu",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "martin-perez-maria-eva",
+    "nom": "Martín Pérez, María Eva",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "martinez-martin-alicia",
+    "nom": "Martínez Martín, Alicia",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "mestre-garcia-ana-maria",
+    "nom": "Mestre García, Ana María",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "millan-munoz-julio",
+    "nom": "Millán Muñoz, Julio",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "miranda-aranda-jose-antonio",
+    "nom": "Miranda Aranda, José Antonio",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "molina-canadas-maria-carmen",
+    "nom": "Molina Cañadas, María Carmen",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "molina-rascon-adolfo-manuel",
+    "nom": "Molina Rascón, Adolfo Manuel",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "moreno-bonilla-juan-manuel",
+    "nom": "Moreno Bonilla, Juan Manuel",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "moreno-de-acevedo-yague-juan-ignacio",
+    "nom": "Moreno de Acevedo Yagüe, Juan Ignacio",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "moscoso-sanchez-david-jesus",
+    "nom": "Moscoso Sánchez, David Jesús",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "munoz-madrid-jacinto",
+    "nom": "Muñoz Madrid, Jacinto",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "munoz-sanchez-jose",
+    "nom": "Muñoz Sánchez, José",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "navarro-garzon-micaela",
+    "nom": "Navarro Garzón, Micaela",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "navarro-perez-patricia",
+    "nom": "Navarro Pérez, Patricia",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "nieto-castro-inmaculada",
+    "nom": "Nieto Castro, Inmaculada",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Izquierda Unida Los Verdes-Convocatoria por Andalucía",
+    "partit": "IU"
+  },
+  {
+    "slug": "ona-sevilla-maria-esperanza",
+    "nom": "Oña Sevilla, María Esperanza",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "pachon-martin-brigida",
+    "nom": "Pachón Martín, Brígida",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "palacios-perez-amelia",
+    "nom": "Palacios Pérez, Amelia",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "pardo-falcon-francisco-javier",
+    "nom": "Pardo Falcón, Francisco Javier",
+    "legislatura": "10",
+    "leg_id": 13
+  },
+  {
+    "slug": "perez-fernandez-veronica",
+    "nom": "Pérez Fernández, Verónica",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "perez-ramirez-diego",
+    "nom": "Pérez Ramírez, Diego",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "perez-rodriguez-maria-del-carmen",
+    "nom": "Pérez Rodríguez, María del Carmen",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Izquierda Unida Los Verdes-Convocatoria por Andalucía",
+    "partit": "IU"
+  },
+  {
+    "slug": "perez-rodriguez-maria-soledad",
+    "nom": "Pérez Rodríguez, María Soledad",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "pizarro-medina-luis",
+    "nom": "Pizarro Medina, Luis",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "pozo-fernandez-patricia-del",
+    "nom": "Pozo Fernández, Patricia del",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "prieto-bonilla-maria-carmen",
+    "nom": "Prieto Bonilla, María Carmen",
+    "legislatura": "10",
+    "leg_id": 13
+  },
+  {
+    "slug": "ramirez-moreno-maria-nieves",
+    "nom": "Ramírez Moreno, María Nieves",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "raynaud-soto-jaime",
+    "nom": "Raynaud Soto, Jaime",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "redondo-calvillo-maria-de-la-o",
+    "nom": "Redondo Calvillo, María de la O",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "redondo-crespo-natividad",
+    "nom": "Redondo Crespo, Natividad",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "rivera-andres-irene",
+    "nom": "Rivera Andrés, Irene",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "rodriguez-gonzalez-jesus",
+    "nom": "Rodríguez González, Jesús",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "rodriguez-rubio-vazquez-maria-teresa",
+    "nom": "Rodríguez-Rubio Vázquez, María Teresa",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "rojas-garcia-carlos",
+    "nom": "Rojas García, Carlos",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "romero-jimenez-sergio",
+    "nom": "Romero Jiménez, Sergio",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "romero-mojarro-modesta",
+    "nom": "Romero Mojarro, Modesta",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "romero-moreno-felix",
+    "nom": "Romero Moreno, Félix",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "romero-perez-maria-victoria",
+    "nom": "Romero Pérez, María Victoria",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "romero-sanchez-jesus",
+    "nom": "Romero Sánchez, Jesús",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "rubino-yanez-beatriz",
+    "nom": "Rubiño Yáñez, Beatriz",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "ruiz-castro-noelia",
+    "nom": "Ruiz Castro, Noelia",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "ruiz-garcia-jesus-maria",
+    "nom": "Ruiz García, Jesús María",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "ruiz-navarro-sonia-maria",
+    "nom": "Ruiz Navarro, Sonia María",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "ruiz-rodriguez-gema-del-rocio",
+    "nom": "Ruiz Rodríguez, Gema del Rocío",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "ruiz-sillero-bernal-maria-teresa",
+    "nom": "Ruiz-Sillero Bernal, María Teresa",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "saldana-moreno-antonio",
+    "nom": "Saldaña Moreno, Antonio",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "sanchez-haro-rodrigo",
+    "nom": "Sánchez Haro, Rodrigo",
+    "legislatura": "10",
+    "leg_id": 13
+  },
+  {
+    "slug": "sanchez-maldonado-jose",
+    "nom": "Sánchez Maldonado, José",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "sanchez-teruel-jose-luis",
+    "nom": "Sánchez Teruel, José Luis",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "sanchez-villaverde-antonio",
+    "nom": "Sánchez Villaverde, Antonio",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "segura-martinez-adela",
+    "nom": "Segura Martínez, Adela",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "serrano-jimenez-maria-jesus",
+    "nom": "Serrano Jiménez, María Jesús",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "serrano-moreno-jose-luis",
+    "nom": "Serrano Moreno, José Luis",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "serrano-reyes-manuela",
+    "nom": "Serrano Reyes, Manuela",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "terron-montero-javier",
+    "nom": "Terrón Montero, Javier",
+    "legislatura": "10",
+    "leg_id": 13
+  },
+  {
+    "slug": "torrico-pozuelo-miguel-angel",
+    "nom": "Torrico Pozuelo, Miguel Ángel",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "valero-rodriguez-rafael-vicente",
+    "nom": "Valero Rodríguez, Rafael Vicente",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "vargas-ramos-francisco-jose",
+    "nom": "Vargas Ramos, Francisco José",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "velasco-gonzalez-carmen-dolores",
+    "nom": "Velasco González, Carmen Dolores",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "venzal-contreras-pablo-jose",
+    "nom": "Venzal Contreras, Pablo José",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "viboras-jimenez-elena",
+    "nom": "Víboras Jiménez, Elena",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "viedma-quesada-jacinto-jesus",
+    "nom": "Viedma Quesada, Jacinto Jesús",
+    "legislatura": "10",
+    "leg_id": 13,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "aguilar-rivero-rosa",
+    "nom": "Aguilar Rivero, Rosa",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Izquierda Unida Los Verdes-Convocatoria por Andalucía",
+    "partit": "IU"
+  },
+  {
+    "slug": "aguilera-clavijo-angela",
+    "nom": "Aguilera Clavijo, Ángela",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Izquierda Unida Los Verdes-Convocatoria por Andalucía",
+    "partit": "IU"
+  },
+  {
+    "slug": "ahumada-gavira-guzman",
+    "nom": "Ahumada Gavira, Guzmán",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Unidas Podemos por Andalucía",
+    "partit": "Unidas Podemos"
+  },
+  {
+    "slug": "albas-vives-maria-isabel",
+    "nom": "Albás Vives, María Isabel",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "alonso-fernandez-rodrigo-javier",
+    "nom": "Alonso Fernández, Rodrigo Javier",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "barranco-garcia-carmen",
+    "nom": "Barranco García, Carmen",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Unidas Podemos por Andalucía",
+    "partit": "Unidas Podemos"
+  },
+  {
+    "slug": "bosquet-aznar-marta",
+    "nom": "Bosquet Aznar, Marta",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "bueno-navarro-juan-francisco",
+    "nom": "Bueno Navarro, Juan Francisco",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "bustinduy-barrero-maria-luisa",
+    "nom": "Bustinduy Barrero, María Luisa",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "cambronero-piqueras-pablo-emerito",
+    "nom": "Cambronero Piqueras, Pablo Emérito",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "candon-adan-alfonso",
+    "nom": "Candón Adán, Alfonso",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "cano-palomino-jose-luis",
+    "nom": "Cano Palomino, José Luis",
+    "legislatura": "11",
+    "leg_id": 14
+  },
+  {
+    "slug": "caracuel-caliz-rafael-francisco",
+    "nom": "Caracuel Cáliz, Rafael Francisco",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "carazo-villalonga-maria-francisca",
+    "nom": "Carazo Villalonga, María Francisca",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "carmona-sanchez-jose-ramon",
+    "nom": "Carmona Sánchez, José Ramón",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "carnero-sierra-javier",
+    "nom": "Carnero Sierra, Javier",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "carretero-espinosa-de-los-monteros-carmen",
+    "nom": "Carretero Espinosa de los Monteros, Carmen",
+    "legislatura": "11",
+    "leg_id": 14
+  },
+  {
+    "slug": "carrillo-guerrero-francisco-jose",
+    "nom": "Carrillo Guerrero, Francisco José",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "cespedes-senovilla-carmen",
+    "nom": "Céspedes Senovilla, Carmen",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "conejo-rueda-francisco-javier",
+    "nom": "Conejo Rueda, Francisco Javier",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "cornejo-lopez-juan-maria",
+    "nom": "Cornejo López, Juan María",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "crespo-diaz-maria-carmen",
+    "nom": "Crespo Díaz, María Carmen",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "crespo-garcia-diego",
+    "nom": "Crespo García, Diego",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Adelante Andalucía",
+    "partit": "Adelante Andalucía"
+  },
+  {
+    "slug": "cruz-martinez-noemi",
+    "nom": "Cruz Martínez, Noemí",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "diaz-pacheco-susana",
+    "nom": "Díaz Pacheco, Susana",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "diaz-robledo-julio-jesus",
+    "nom": "Díaz Robledo, Julio Jesús",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "dominguez-guerola-erik",
+    "nom": "Domínguez Guerola, Erik",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "dorado-balmon-luz-marina",
+    "nom": "Dorado Balmón, Luz Marina",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Adelante Andalucía",
+    "partit": "Adelante Andalucía"
+  },
+  {
+    "slug": "duran-sanchez-juan-pablo",
+    "nom": "Durán Sánchez, Juan Pablo",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "espinosa-lopez-rosalia-angeles",
+    "nom": "Espinosa López, Rosalía Ángeles",
+    "legislatura": "11",
+    "leg_id": 14
+  },
+  {
+    "slug": "fernandez-asensio-raul-fernando",
+    "nom": "Fernández Asensio, Raúl Fernando",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "fernandez-ferrera-francisco-jesus",
+    "nom": "Fernández Ferrera, Francisco Jesús",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "fernandez-hernandez-francisco-javier",
+    "nom": "Fernández Hernández, Francisco Javier",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "fernandez-martin-jesus",
+    "nom": "Fernández Martín, Jesús",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Unidas Podemos por Andalucía",
+    "partit": "Unidas Podemos"
+  },
+  {
+    "slug": "ferriz-gomez-maria-de-los-angeles",
+    "nom": "Férriz Gómez, María de los Ángeles",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "fiscal-lopez-jose-gregorio",
+    "nom": "Fiscal López, José Gregorio",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "gamez-garcia-maria-de-las-mercedes",
+    "nom": "Gámez García, María de las Mercedes",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "garcia-bueno-maria-del-carmen",
+    "nom": "García Bueno, María del Carmen",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "garcia-casaucau-maria-vanessa",
+    "nom": "García Casaucau, María Vanessa",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Adelante Andalucía",
+    "partit": "Adelante Andalucía"
+  },
+  {
+    "slug": "garcia-de-leon-bruno",
+    "nom": "García de León, Bruno",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "garcia-jimenez-ana-vanessa",
+    "nom": "García Jiménez, Ana Vanessa",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "garcia-sanchez-jose-ignacio",
+    "nom": "García Sánchez, José Ignacio",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Adelante Andalucía",
+    "partit": "Adelante Andalucía"
+  },
+  {
+    "slug": "gavira-florentino-manuel",
+    "nom": "Gavira Florentino, Manuel",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "gaya-sanchez-sonia",
+    "nom": "Gaya Sánchez, Sonia",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "gil-roman-ana",
+    "nom": "Gil Román, Ana",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "gomez-dominguez-carmelo",
+    "nom": "Gómez Domínguez, Carmelo",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "gonzalez-fernandez-maria-gracia",
+    "nom": "González Fernández, María Gracia",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Adelante Andalucía",
+    "partit": "Adelante Andalucía"
+  },
+  {
+    "slug": "gonzalez-insua-concepcion",
+    "nom": "González Insúa, Concepción",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "gonzalez-rivera-manuel-andres",
+    "nom": "González Rivera, Manuel Andrés",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "hernandez-valdes-alejandro",
+    "nom": "Hernández Valdés, Alejandro",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "hernandez-white-carlos",
+    "nom": "Hernández White, Carlos",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "herrera-de-las-heras-ramon",
+    "nom": "Herrera de las Heras, Ramón",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "hidalgo-azcona-angela-maria",
+    "nom": "Hidalgo Azcona, Ángela María",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "hidalgo-garcia-jose-antonio",
+    "nom": "Hidalgo García, José Antonio",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "hormigo-leon-maria-del-mar",
+    "nom": "Hormigo León, María del Mar",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "imbroda-ortiz-francisco-javier",
+    "nom": "Imbroda Ortiz, Francisco Javier",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "jimenez-barrios-manuel",
+    "nom": "Jiménez Barrios, Manuel",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "jimenez-diaz-mario-jesus",
+    "nom": "Jiménez Díaz, Mario Jesús",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "jimenez-vilchez-maria-teresa",
+    "nom": "Jiménez Vílchez, María Teresa",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "jurado-fernandez-de-cordoba-maria-beatriz",
+    "nom": "Jurado Fernández de Córdoba, María Beatriz",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "lizarraga-mollinedo-maria-del-carmen",
+    "nom": "Lizárraga Mollinedo, María del Carmen",
+    "legislatura": "11",
+    "leg_id": 14
+  },
+  {
+    "slug": "llopis-barrera-ana-maria",
+    "nom": "Llopis Barrera, Ana María",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "lopez-gabarro-maria-dolores",
+    "nom": "López Gabarro, María Dolores",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "lopez-garcia-felipe",
+    "nom": "López García, Felipe",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "lopez-romero-mercedes-maria",
+    "nom": "López Romero, Mercedes María",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "lozano-moral-maria-isabel",
+    "nom": "Lozano Moral, María Isabel",
+    "legislatura": "11",
+    "leg_id": 14
+  },
+  {
+    "slug": "maese-villacampa-araceli",
+    "nom": "Maese Villacampa, Araceli",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "maillo-canadas-antonio",
+    "nom": "Maíllo Cañadas, Antonio",
+    "legislatura": "11",
+    "leg_id": 14
+  },
+  {
+    "slug": "marin-lozano-juan-antonio",
+    "nom": "Marín Lozano, Juan Antonio",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "marquez-romero-maria",
+    "nom": "Márquez Romero, María",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "martin-arcos-juan-jose",
+    "nom": "Martín Arcos, Juan José",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "martin-iglesias-antonio",
+    "nom": "Martín Iglesias, Antonio",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "martinez-granados-maria-del-carmen",
+    "nom": "Martínez Granados, María del Carmen",
+    "legislatura": "11",
+    "leg_id": 14
+  },
+  {
+    "slug": "martinez-martin-alicia",
+    "nom": "Martínez Martín, Alicia",
+    "legislatura": "11",
+    "leg_id": 14
+  },
+  {
+    "slug": "martos-luque-maria-isabel",
+    "nom": "Martos Luque, María Isabel",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "mestre-garcia-ana-maria",
+    "nom": "Mestre García, Ana María",
+    "legislatura": "11",
+    "leg_id": 14
+  },
+  {
+    "slug": "molina-arroyo-jose-ignacio",
+    "nom": "Molina Arroyo, José Ignacio",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Adelante Andalucía",
+    "partit": "Adelante Andalucía"
+  },
+  {
+    "slug": "molina-rascon-adolfo-manuel",
+    "nom": "Molina Rascón, Adolfo Manuel",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "molto-garcia-eugenio",
+    "nom": "Moltó García, Eugenio",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "mora-grande-maria-isabel",
+    "nom": "Mora Grande, María Isabel",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Adelante Andalucía",
+    "partit": "Adelante Andalucía"
+  },
+  {
+    "slug": "moreno-bonilla-juan-manuel",
+    "nom": "Moreno Bonilla, Juan Manuel",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "moreno-madueno-enrique",
+    "nom": "Moreno Madueño, Enrique",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "moreno-sanchez-monica",
+    "nom": "Moreno Sánchez, Mónica",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "morillo-alejo-benito",
+    "nom": "Morillo Alejo, Benito",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "moscoso-sanchez-david-jesus",
+    "nom": "Moscoso Sánchez, David Jesús",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "mulas-belizon-angela-maria",
+    "nom": "Mulas Belizón, Ángela María",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "munoz-sanchez-jose",
+    "nom": "Muñoz Sánchez, José",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "naranjo-sanchez-ana-maria",
+    "nom": "Naranjo Sánchez, Ana María",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Unidas Podemos por Andalucía",
+    "partit": "Unidas Podemos"
+  },
+  {
+    "slug": "navarro-perez-patricia",
+    "nom": "Navarro Pérez, Patricia",
+    "legislatura": "11",
+    "leg_id": 14
+  },
+  {
+    "slug": "nieto-ballesteros-jose-antonio",
+    "nom": "Nieto Ballesteros, José Antonio",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "nieto-castro-inmaculada",
+    "nom": "Nieto Castro, Inmaculada",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Unidas Podemos por Andalucía",
+    "partit": "Unidas Podemos"
+  },
+  {
+    "slug": "ocana-castellon-francisco-jose",
+    "nom": "Ocaña Castellón, Francisco José",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "ona-sevilla-maria-esperanza",
+    "nom": "Oña Sevilla, María Esperanza",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "palacios-ruiz-francisco-jose",
+    "nom": "Palacios Ruiz, Francisco José",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "pardo-reinaldos-maria-teresa",
+    "nom": "Pardo Reinaldos, María Teresa",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "pareja-de-vega-javier",
+    "nom": "Pareja de Vega, Javier",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "perez-fernandez-veronica",
+    "nom": "Pérez Fernández, Verónica",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "perez-galindo-virginia",
+    "nom": "Pérez Galindo, Virginia",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "perez-rodriguez-maria-soledad",
+    "nom": "Pérez Rodríguez, María Soledad",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "pinero-rodriguez-maria-jose",
+    "nom": "Piñero Rodríguez, María José",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "pintor-alonso-maria-pilar",
+    "nom": "Pintor Alonso, María Pilar",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "pozuelo-cerezo-emiliano",
+    "nom": "Pozuelo Cerezo, Emiliano",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "ramirez-de-arellano-lopez-antonio",
+    "nom": "Ramírez de Arellano López, Antonio",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "rodriguez-aguilar-angela",
+    "nom": "Rodríguez Aguilar, Ángela",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "rodriguez-fernandez-luz-belinda",
+    "nom": "Rodríguez Fernández, Luz Belinda",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "rodriguez-rubio-vazquez-maria-teresa",
+    "nom": "Rodríguez-Rubio Vázquez, María Teresa",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Podemos Andalucía",
+    "partit": "Podemos"
+  },
+  {
+    "slug": "romero-jimenez-sergio",
+    "nom": "Romero Jiménez, Sergio",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "rubino-yanez-beatriz",
+    "nom": "Rubiño Yáñez, Beatriz",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "ruiz-castro-noelia",
+    "nom": "Ruiz Castro, Noelia",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "ruiz-dominguez-rocio",
+    "nom": "Ruiz Domínguez, Rocío",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "ruiz-espejo-jose-luis",
+    "nom": "Ruiz Espejo, José Luis",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "ruiz-garcia-jesus-maria",
+    "nom": "Ruiz García, Jesús María",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "ruiz-ortiz-miguel-angel",
+    "nom": "Ruiz Ortiz, Miguel Ángel",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "samper-rueda-andres-ramon",
+    "nom": "Samper Rueda, Andrés Ramón",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "sanchez-castillo-ismael",
+    "nom": "Sánchez Castillo, Ismael",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Unidas Podemos por Andalucía",
+    "partit": "Unidas Podemos"
+  },
+  {
+    "slug": "sanchez-escudero-gerardo",
+    "nom": "Sánchez Escudero, Gerardo",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "sanchez-haro-rodrigo",
+    "nom": "Sánchez Haro, Rodrigo",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "sanchez-lopez-juan-de-dios",
+    "nom": "Sánchez López, Juan de Dios",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "sanchez-moreno-ricardo",
+    "nom": "Sánchez Moreno, Ricardo",
+    "legislatura": "11",
+    "leg_id": 14
+  },
+  {
+    "slug": "sanchez-munoz-maria-del-mar",
+    "nom": "Sánchez Muñoz, María del Mar",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Ciudadanos",
+    "partit": "Cs"
+  },
+  {
+    "slug": "sanchez-rubio-maria-josefa",
+    "nom": "Sánchez Rubio, María Josefa",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "sanchez-teruel-jose-luis",
+    "nom": "Sánchez Teruel, José Luis",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "sanchez-torregrosa-maria-isabel",
+    "nom": "Sánchez Torregrosa, María Isabel",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "segovia-brome-rafael",
+    "nom": "Segovia Brome, Rafael",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "serrano-castro-francisco-de-asis",
+    "nom": "Serrano Castro, Francisco de Asís",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "serrano-reyes-manuela",
+    "nom": "Serrano Reyes, Manuela",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "valpuesta-bermudez-macario",
+    "nom": "Valpuesta Bermúdez, Macario",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "velasco-gonzalez-carmen-dolores",
+    "nom": "Velasco González, Carmen Dolores",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "venzal-contreras-pablo-jose",
+    "nom": "Venzal Contreras, Pablo José",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Popular Andaluz",
+    "partit": "PP"
+  },
+  {
+    "slug": "viedma-quesada-jacinto-jesus",
+    "nom": "Viedma Quesada, Jacinto Jesús",
+    "legislatura": "11",
+    "leg_id": 14,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "villaverde-valenciano-ana",
+    "nom": "Villaverde Valenciano, Ana",
+    "legislatura": "11",
+    "leg_id": 14
+  },
+  {
+    "slug": "aguilar-roman-jose-aurelio",
+    "nom": "Aguilar Román, José Aurelio",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "aguilera-gamero-isabel-maria",
+    "nom": "Aguilera Gamero, Isabel María",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "aguirre-munoz-jesus",
+    "nom": "Aguirre Muñoz, Jesús",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "alba-castineira-maria-jose-de",
+    "nom": "Alba Castiñeira, María José de",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "alonso-fernandez-rodrigo-javier",
+    "nom": "Alonso Fernández, Rodrigo Javier",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "ambrosio-palos-maria-isabel",
+    "nom": "Ambrosio Palos, María Isabel",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "arrabal-higuera-rocio",
+    "nom": "Arrabal Higuera, Rocío",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "ayala-garcia-jose-maria",
+    "nom": "Ayala García, José María",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "bonilla-hidalgo-manuel-santiago",
+    "nom": "Bonilla Hidalgo, Manuel Santiago",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "bosquet-arias-juan-jose",
+    "nom": "Bosquet Arias, Juan José",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "cabello-cabrera-araceli",
+    "nom": "Cabello Cabrera, Araceli",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "caetano-toledo-dolores",
+    "nom": "Caetano Toledo, Dolores",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "carmona-sanchez-jose-ramon",
+    "nom": "Carmona Sánchez, José Ramón",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "castano-dieguez-adela",
+    "nom": "Castaño Diéguez, Adela",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "castilla-zumaquero-daniel",
+    "nom": "Castilla Zumaquero, Daniel",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "centeno-garcia-berta-sofia",
+    "nom": "Centeno García, Berta Sofía",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "chocano-roman-ana",
+    "nom": "Chocano Román, Ana",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "cortes-lucena-javier",
+    "nom": "Cortés Lucena, Javier",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "delgado-ramos-juan-antonio",
+    "nom": "Delgado Ramos, Juan Antonio",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Por Andalucía",
+    "partit": "Por Andalucía"
+  },
+  {
+    "slug": "diaz-canete-maria",
+    "nom": "Díaz Cañete, María",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "dominguez-guerola-erik",
+    "nom": "Domínguez Guerola, Erik",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "duran-parra-alejandra",
+    "nom": "Durán Parra, Alejandra",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Por Andalucía",
+    "partit": "Por Andalucía"
+  },
+  {
+    "slug": "escarcena-lopez-maria-jose",
+    "nom": "Escarcena López, María José",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "espadas-cejas-juan",
+    "nom": "Espadas Cejas, Juan",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "fernandez-morales-purificacion",
+    "nom": "Fernández Morales, Purificación",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "ferriz-gomez-maria-de-los-angeles",
+    "nom": "Férriz Gómez, María de los Ángeles",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "fuentes-perez-rosa-maria",
+    "nom": "Fuentes Pérez, Rosa María",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "gamez-garcia-maria-de-las-mercedes",
+    "nom": "Gámez García, María de las Mercedes",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "garcia-carrasco-catalina-montserrat",
+    "nom": "García Carrasco, Catalina Montserrat",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "garcia-castillo-mariano",
+    "nom": "García Castillo, Mariano",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "garcia-garcia-jose-carlos",
+    "nom": "García García, José Carlos",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "garcia-macias-irene",
+    "nom": "García Macías, Irene",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "garcia-perez-pablo",
+    "nom": "García Pérez, Pablo",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "garcia-roman-jose-ricardo",
+    "nom": "García Román, José Ricardo",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "garcia-sanchez-jose-ignacio",
+    "nom": "García Sánchez, José Ignacio",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Mixto-Adelante Andalucía",
+    "partit": "Adelante Andalucía"
+  },
+  {
+    "slug": "gavino-pazo-manuel-enrique",
+    "nom": "Gaviño Pazó, Manuel Enrique",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "gavira-florentino-manuel",
+    "nom": "Gavira Florentino, Manuel",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "gomez-corona-esperanza",
+    "nom": "Gómez Corona, Esperanza",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Por Andalucía",
+    "partit": "Por Andalucía"
+  },
+  {
+    "slug": "gomez-jurado-jose-manuel",
+    "nom": "Gómez Jurado, José Manuel",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Por Andalucía",
+    "partit": "Por Andalucía"
+  },
+  {
+    "slug": "gonzalez-nieto-jose-ignacio",
+    "nom": "González Nieto, José Ignacio",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "gonzalez-perez-susana",
+    "nom": "González Pérez, Susana",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "gonzalez-rivera-manuel-andres",
+    "nom": "González Rivera, Manuel Andrés",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "guzman-de-la-roza-manuel",
+    "nom": "Guzmán de la Roza, Manuel",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "hernandez-tristan-mateo-javier",
+    "nom": "Hernández Tristán, Mateo Javier",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "hernandez-valdes-alejandro",
+    "nom": "Hernández Valdés, Alejandro",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "herrera-lorente-trinidad",
+    "nom": "Herrera Lorente, Trinidad",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "hita-fernandez-ascension",
+    "nom": "Hita Fernández, Ascensión",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "ibanez-martinez-julia",
+    "nom": "Ibáñez Martínez, Julia",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "izquierdo-paredes-maria-auxiliadora",
+    "nom": "Izquierdo Paredes, María Auxiliadora",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "jimenez-diaz-mario-jesus",
+    "nom": "Jiménez Díaz, Mario Jesús",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "jimenez-jimenez-cristina-alejandra",
+    "nom": "Jiménez Jiménez, Cristina Alejandra",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "jurado-fernandez-de-cordoba-maria-beatriz",
+    "nom": "Jurado Fernández de Córdoba, María Beatriz",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "llanes-diaz-salazar-gaspar-jose",
+    "nom": "Llanes Díaz-Salazar, Gaspar José",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "lopez-gabarro-maria-dolores",
+    "nom": "López Gabarro, María Dolores",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "lopez-linares-noel",
+    "nom": "López Linares, Noel",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "lopez-olea-ricardo",
+    "nom": "López Olea, Ricardo",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "lozano-moral-maria-isabel",
+    "nom": "Lozano Moral, María Isabel",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "manzano-perez-olga",
+    "nom": "Manzano Pérez, Olga",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "marchal-rosales-juan-manuel",
+    "nom": "Marchal Rosales, Juan Manuel",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "marquez-berral-rafael",
+    "nom": "Márquez Berral, Rafael",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "marquez-lancha-juan-antonio",
+    "nom": "Márquez Lancha, Juan Antonio",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "marquez-romero-maria",
+    "nom": "Márquez Romero, María",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "martin-iglesias-antonio",
+    "nom": "Martín Iglesias, Antonio",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "martin-nieto-dolores",
+    "nom": "Martín Nieto, Dolores",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "martinez-diaz-encarnacion-maria",
+    "nom": "Martínez Díaz, Encarnación María",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "martinez-martinez-angeles",
+    "nom": "Martínez Martínez, Ángeles",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "martos-montilla-veronica",
+    "nom": "Martos Montilla, Verónica",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "mestre-garcia-ana-maria",
+    "nom": "Mestre García, Ana María",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "mora-grande-maria-isabel",
+    "nom": "Mora Grande, María Isabel",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Mixto-Adelante Andalucía",
+    "partit": "Adelante Andalucía"
+  },
+  {
+    "slug": "moreno-bonilla-juan-manuel",
+    "nom": "Moreno Bonilla, Juan Manuel",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "morillo-alejo-benito",
+    "nom": "Morillo Alejo, Benito",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "murillo-lopez-alicia",
+    "nom": "Murillo López, Alicia",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "navarro-rodriguez-maria-del-pilar",
+    "nom": "Navarro Rodríguez, María del Pilar",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "nieto-castro-inmaculada",
+    "nom": "Nieto Castro, Inmaculada",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Por Andalucía",
+    "partit": "Por Andalucía"
+  },
+  {
+    "slug": "oblare-torres-francisco-javier",
+    "nom": "Oblaré Torres, Francisco Javier",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "olmedo-borrego-maria-remedios",
+    "nom": "Olmedo Borrego, María Remedios",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "ona-sevilla-maria-esperanza",
+    "nom": "Oña Sevilla, María Esperanza",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "ortells-polo-jose-maria",
+    "nom": "Ortells Polo, José María",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "perez-galindo-virginia",
+    "nom": "Pérez Galindo, Virginia",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "pintor-alonso-maria-pilar",
+    "nom": "Pintor Alonso, María Pilar",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "pozo-fernandez-patricia-del",
+    "nom": "Pozo Fernández, Patricia del",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "prieto-rodriguez-maria-angeles",
+    "nom": "Prieto Rodríguez, María Ángeles",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "recio-fernandez-rafael-alfonso",
+    "nom": "Recio Fernández, Rafael Alfonso",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "repullo-milla-antonio-jesus",
+    "nom": "Repullo Milla, Antonio Jesús",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "rivas-pineda-susana",
+    "nom": "Rivas Pineda, Susana",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "rodriguez-tamayo-maria-mercedes",
+    "nom": "Rodríguez Tamayo, María Mercedes",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "romero-obrero-ana-maria",
+    "nom": "Romero Obrero, Ana María",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "romero-romero-alejandro",
+    "nom": "Romero Romero, Alejandro",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "rosa-crespo-francisca-maria",
+    "nom": "Rosa Crespo, Francisca María",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "ruiz-espejo-jose-luis",
+    "nom": "Ruiz Espejo, José Luis",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "ruiz-guzman-rafael-joaquin",
+    "nom": "Ruiz Guzmán, Rafael Joaquín",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "ruiz-ortiz-miguel-angel",
+    "nom": "Ruiz Ortiz, Miguel Ángel",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "ruiz-sanchez-antonio",
+    "nom": "Ruiz Sánchez, Antonio",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "ruiz-vazquez-ana-maria",
+    "nom": "Ruiz Vázquez, Ana María",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "saavedra-requena-jorge",
+    "nom": "Saavedra Requena, Jorge",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "saldana-moreno-antonio",
+    "nom": "Saldaña Moreno, Antonio",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "salvador-gimenez-juan-jose",
+    "nom": "Salvador Giménez, Juan José",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "sanchez-escudero-gerardo",
+    "nom": "Sánchez Escudero, Gerardo",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "sanchez-teruel-jose-luis",
+    "nom": "Sánchez Teruel, José Luis",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "sanroman-montero-manuel-alberto",
+    "nom": "Sanromán Montero, Manuel Alberto",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "santiago-buendia-celia",
+    "nom": "Santiago Buendía, Celia",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "sanz-cabello-antonio",
+    "nom": "Sanz Cabello, Antonio",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "segovia-brome-rafael",
+    "nom": "Segovia Brome, Rafael",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "sevilla-rodriguez-antonio",
+    "nom": "Sevilla Rodríguez, Antonio",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Vox en Andalucía",
+    "partit": "Vox"
+  },
+  {
+    "slug": "torres-caballero-victor-manuel",
+    "nom": "Torres Caballero, Víctor Manuel",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  },
+  {
+    "slug": "trujillo-perez-jessica",
+    "nom": "Trujillo Pérez, Jéssica",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "vacas-perez-francisco-javier",
+    "nom": "Vacas Pérez, Francisco Javier",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "venzal-contreras-pablo-jose",
+    "nom": "Venzal Contreras, Pablo José",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Popular de Andalucía",
+    "partit": "PP"
+  },
+  {
+    "slug": "viedma-quesada-jacinto-jesus",
+    "nom": "Viedma Quesada, Jacinto Jesús",
+    "legislatura": "12",
+    "leg_id": 3377,
+    "grup_parlamentari": "G.P. Socialista",
+    "partit": "PSOE"
+  }
+]

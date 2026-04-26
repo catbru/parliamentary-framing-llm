@@ -7,5 +7,7 @@
 .env
 *.log
 andalusia-mostra.Rproj
-01_dades_crues/
-02_dades_processades/
+01_dades_crues/intervencions_stt/*
+01_dades_crues/sessions_esquelet/*
+!**/ .gitkeep
+
