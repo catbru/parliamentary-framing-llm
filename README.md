@@ -20,7 +20,7 @@ El Parlament d'Andalusia publica les sessions plenàries a través d'un arxiu de
 
 ### 2 · Construcció del Corpus i Regex
 
-Un regex de base (`(?i)catalu[ñn]a`) va detectar mencions inicials de Catalunya. Per a cada coincidència es va extreure una finestra de context de ±200 paraules, concatenades en un sub-corpus de text pla (`02_dades_processades/corpus_mencions_catalunya.txt`). Un LLM va llegir aquest sub-corpus i va induir, a partir de l'ús real dels diputats, el camp lèxic complet per referir-se a Catalunya o al moviment independentista. Això va produir el **regex estès**:
+Un regex de base (`(?i)catalu[ñn]a`) detecta mencions inicials de Catalunya. Per a cada coincidència es extreu una finestra de context de ±200 paraules, concatenades en un sub-corpus de text pla (`02_dades_processades/corpus_mencions_catalunya.txt`). Un LLM llegeix aquest sub-corpus i extreu, a partir de l'ús real dels diputats, el camp lèxic complet per referir-se a Catalunya. Això produeix el **regex estès**:
 
 ```
 (?i)(catalu[ñn]a|catalan(es|as|án)?|independentis(mo|tas?)|separatis(mo|tas?)|golpistas?)
