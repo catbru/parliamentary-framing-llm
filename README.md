@@ -39,7 +39,7 @@ Cada una de les 792 intervencions és classificada per GPT seguint un codebook e
 | `sentiment_cat` | `Hostil_Negatiu` · `Neutral_Institucional` · `Empàtic_Positiu` |
 | `primary_frame` | `Electoral_Weaponization` · `Constitutional_Threat` · `Grievance_Economics` · `Positive_Reference` · `Other` |
 
-**Garanties metodològiques** (seguint [Halterman & Keith, 2024]([https://doi.org/10.1017/pan.2024.20](https://arxiv.org/abs/2407.10747)):
+**Garanties metodològiques** (seguint [Halterman & Keith, 2024](https://arxiv.org/abs/2407.10747)):
 
 - **Codificació cega** — el model només rep el text de la intervenció, sense identitat de l'orador ni partit.
 - **Sortida estructurada** — les respostes es restringeixen a un esquema JSON estricte via `ellmer::chat_structured()`, eliminant al·lucinacions i garantint categories vàlides.
